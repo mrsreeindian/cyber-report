@@ -1,0 +1,51 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id           String     @id @default(uuid())
+  username     String     @unique
+  passwordHash String
+  role         String     @default("admin")
+  mfaSecret    String?
+  createdAt    DateTime   @default(now())
+  auditLogs    AuditLog[]
+}
+
+model Report {
+  id           String       @id @default(uuid())
+  trackingCode String       @unique
+  category     String
+  platform     String
+  description  String
+  status       String       @default("pending")
+  createdAt    DateTime     @default(now())
+  attachments  Attachment[]
+}
+
+model Attachment {
+  id        String   @id @default(uuid())
+  reportId  String
+  report    Report   @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  blobUrl   String
+  fileType  String
+  createdAt DateTime @default(now())
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  adminId   String
+  admin     Admin    @relation(fields: [adminId], references: [id])
+  action    String
+  timestamp DateTime @default(now())
+}

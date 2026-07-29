@@ -9,6 +9,15 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@marsidev/react-turnstile": "^1.5.4",
+    "@prisma/client": "^7.9.1",
+    "@types/dompurify": "^3.0.5",
+    "@vercel/blob": "^2.6.1",
+    "@vercel/kv": "^3.0.0",
+    "@vercel/postgres": "^0.10.0",
+    "argon2": "^0.45.1",
+    "dompurify": "^3.4.12",
+    "lucide-react": "^1.27.0",
     "next": "16.2.12",
     "react": "19.2.4",
     "react-dom": "19.2.4"
@@ -19,6 +28,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.12",
+    "prisma": "^7.9.1",
     "typescript": "^5"
   }
 }
