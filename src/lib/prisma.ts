@@ -4,7 +4,7 @@ import { Pool } from 'pg';
 
 const globalForPrisma = global as unknown as { prisma: PrismaClient };
 
-const connectionString = process.env.DATABASE_URL || 'postgres://dummy:dummy@localhost:5432/dummy';
+const connectionString = process.env.DATABASE_URL || process.env.POSTGRES_PRISMA_URL || process.env.POSTGRES_URL || 'postgres://dummy:dummy@localhost:5432/dummy';
 
 const pool = new Pool({
   connectionString,
