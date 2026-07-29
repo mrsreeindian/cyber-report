@@ -23,11 +23,16 @@ export default function ReportPage() {
     
     try {
       const result = await createReport(formData);
-      setTrackingCode(result.trackingCode);
-      setIsSuccess(true);
+      if (result.success && result.trackingCode) {
+        setTrackingCode(result.trackingCode);
+        setIsSuccess(true);
+      } else {
+        throw new Error(result.error || 'Failed to submit report');
+      }
     } catch (error) {
       console.error(error);
-      alert('An error occurred while submitting your report. Please try again.');
+      const errorMessage = error instanceof Error ? error.message : 'An error occurred while submitting your report. Please try again.';
+      alert(errorMessage);
     } finally {
       setIsSubmitting(false);
     }
