@@ -4,19 +4,33 @@ import { useState } from 'react';
 import { ShieldAlert, Send } from 'lucide-react';
 import Link from 'next/link';
 import { Turnstile } from '@marsidev/react-turnstile';
+import { createReport } from '@/actions/report';
 
 export default function ReportPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [trackingCode, setTrackingCode] = useState('');
   
-  const handleSubmit = (e: React.FormEvent) => {
+  const [formData, setFormData] = useState({
+    category: '',
+    platform: '',
+    description: ''
+  });
+  
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Mock submission process
-    setTimeout(() => {
-      setIsSubmitting(false);
+    
+    try {
+      const result = await createReport(formData);
+      setTrackingCode(result.trackingCode);
       setIsSuccess(true);
-    }, 1500);
+    } catch (error) {
+      console.error(error);
+      alert('An error occurred while submitting your report. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (isSuccess) {
@@ -32,7 +46,7 @@ export default function ReportPage() {
         </p>
         
         <div className="tracking-code-box">
-          X9K2-M4P7-V8R3-L5T1
+          {trackingCode}
         </div>
         
         <p style={{ color: 'var(--danger)', fontSize: '0.875rem', marginBottom: '2rem' }}>
@@ -60,7 +74,12 @@ export default function ReportPage() {
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label className="form-label">Category</label>
-          <select className="form-select" required defaultValue="">
+          <select 
+            className="form-select" 
+            required 
+            value={formData.category}
+            onChange={(e) => setFormData({...formData, category: e.target.value})}
+          >
             <option value="" disabled>Select category</option>
             <option value="harassment">Harassment</option>
             <option value="fraud">Fraud / Embezzlement</option>
@@ -71,7 +90,14 @@ export default function ReportPage() {
 
         <div className="form-group">
           <label className="form-label">Platform / Location</label>
-          <input type="text" className="form-input" placeholder="e.g. Discord, Internal Network, etc." required />
+          <input 
+            type="text" 
+            className="form-input" 
+            placeholder="e.g. Discord, Internal Network, etc." 
+            required 
+            value={formData.platform}
+            onChange={(e) => setFormData({...formData, platform: e.target.value})}
+          />
         </div>
 
         <div className="form-group">
@@ -80,6 +106,8 @@ export default function ReportPage() {
             className="form-textarea" 
             placeholder="Please describe the incident in detail..."
             required
+            value={formData.description}
+            onChange={(e) => setFormData({...formData, description: e.target.value})}
           ></textarea>
         </div>
 
@@ -99,7 +127,7 @@ export default function ReportPage() {
           type="submit" 
           className="btn btn-primary" 
           style={{ width: '100%' }}
-          disabled={isSubmitting}
+          disabled={isSubmitting || !formData.category || !formData.platform || !formData.description}
         >
           {isSubmitting ? 'Encrypting & Submitting...' : (
             <>

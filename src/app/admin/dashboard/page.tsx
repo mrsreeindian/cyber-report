@@ -1,9 +1,19 @@
-'use client';
-
 import { FileText, Search, Shield, Filter, LogOut } from 'lucide-react';
 import Link from 'next/link';
+import { prisma } from '@/lib/prisma';
 
-export default function AdminDashboard() {
+// Server component
+export const dynamic = 'force-dynamic';
+
+export default async function AdminDashboard() {
+  // Fetch real reports from the database
+  const reports = await prisma.report.findMany({
+    orderBy: { createdAt: 'desc' }
+  });
+  
+  const totalReports = reports.length;
+  const pendingReports = reports.filter(r => r.status === 'pending').length;
+
   return (
     <div className="animate-fade-in" style={{ width: '100%', maxWidth: '1200px', margin: '0 auto' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
@@ -23,7 +33,7 @@ export default function AdminDashboard() {
             <FileText size={24} />
           </div>
           <div>
-            <div style={{ fontSize: '2rem', fontWeight: 700 }}>24</div>
+            <div style={{ fontSize: '2rem', fontWeight: 700 }}>{totalReports}</div>
             <div style={{ color: 'var(--text-secondary)', fontSize: '0.875rem' }}>Total Reports</div>
           </div>
         </div>
@@ -33,7 +43,7 @@ export default function AdminDashboard() {
             <Search size={24} />
           </div>
           <div>
-            <div style={{ fontSize: '2rem', fontWeight: 700 }}>5</div>
+            <div style={{ fontSize: '2rem', fontWeight: 700 }}>{pendingReports}</div>
             <div style={{ color: 'var(--text-secondary)', fontSize: '0.875rem' }}>Pending Review</div>
           </div>
         </div>
@@ -72,28 +82,43 @@ export default function AdminDashboard() {
             </tr>
           </thead>
           <tbody>
-            <tr style={{ borderBottom: '1px solid var(--border)' }}>
-              <td style={{ padding: '1rem 1.5rem', fontFamily: 'monospace', color: 'var(--primary)' }}>X9K2-M4P7-V8R3</td>
-              <td style={{ padding: '1rem 1.5rem' }}>Security Vulnerability</td>
-              <td style={{ padding: '1rem 1.5rem' }}>
-                <span style={{ padding: '0.25rem 0.75rem', borderRadius: '999px', fontSize: '0.75rem', background: 'rgba(251, 191, 36, 0.1)', color: 'var(--warning)' }}>Pending</span>
-              </td>
-              <td style={{ padding: '1rem 1.5rem', color: 'var(--text-secondary)' }}>Just now</td>
-              <td style={{ padding: '1rem 1.5rem' }}>
-                <button className="btn btn-secondary" style={{ padding: '0.375rem 0.75rem', fontSize: '0.75rem' }}>Review</button>
-              </td>
-            </tr>
-            <tr>
-              <td style={{ padding: '1rem 1.5rem', fontFamily: 'monospace', color: 'var(--primary)' }}>B2N5-L9Q1-C7X4</td>
-              <td style={{ padding: '1rem 1.5rem' }}>Harassment</td>
-              <td style={{ padding: '1rem 1.5rem' }}>
-                <span style={{ padding: '0.25rem 0.75rem', borderRadius: '999px', fontSize: '0.75rem', background: 'rgba(52, 211, 153, 0.1)', color: 'var(--success)' }}>Resolved</span>
-              </td>
-              <td style={{ padding: '1rem 1.5rem', color: 'var(--text-secondary)' }}>2 days ago</td>
-              <td style={{ padding: '1rem 1.5rem' }}>
-                <button className="btn btn-secondary" style={{ padding: '0.375rem 0.75rem', fontSize: '0.75rem' }}>View</button>
-              </td>
-            </tr>
+            {reports.length === 0 ? (
+              <tr>
+                <td colSpan={5} style={{ padding: '2rem', textAlign: 'center', color: 'var(--text-secondary)' }}>
+                  No reports found.
+                </td>
+              </tr>
+            ) : (
+              reports.map((report) => (
+                <tr key={report.id} style={{ borderBottom: '1px solid var(--border)' }}>
+                  <td style={{ padding: '1rem 1.5rem', fontFamily: 'monospace', color: 'var(--primary)' }}>
+                    {report.trackingCode}
+                  </td>
+                  <td style={{ padding: '1rem 1.5rem', textTransform: 'capitalize' }}>
+                    {report.category}
+                  </td>
+                  <td style={{ padding: '1rem 1.5rem' }}>
+                    <span style={{ 
+                      padding: '0.25rem 0.75rem', 
+                      borderRadius: '999px', 
+                      fontSize: '0.75rem', 
+                      background: report.status === 'pending' ? 'rgba(251, 191, 36, 0.1)' : 'rgba(52, 211, 153, 0.1)', 
+                      color: report.status === 'pending' ? 'var(--warning)' : 'var(--success)' 
+                    }}>
+                      {report.status.charAt(0).toUpperCase() + report.status.slice(1)}
+                    </span>
+                  </td>
+                  <td style={{ padding: '1rem 1.5rem', color: 'var(--text-secondary)' }}>
+                    {new Date(report.createdAt).toLocaleDateString()}
+                  </td>
+                  <td style={{ padding: '1rem 1.5rem' }}>
+                    <button className="btn btn-secondary" style={{ padding: '0.375rem 0.75rem', fontSize: '0.75rem' }}>
+                      Review
+                    </button>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
