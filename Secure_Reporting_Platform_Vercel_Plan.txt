@@ -1,0 +1,75 @@
+COMPLETE IMPLEMENTATION PLAN: SECURE ANONYMOUS REPORTING PLATFORM ON VERCEL
+================================================================================
+
+1. ARCHITECTURE & TECH STACK
+--------------------------------------------------------------------------------
+• Framework: Next.js (App Router) deployed via Vercel (Serverless/Edge Functions).
+• Database: Serverless PostgreSQL using Neon (via Vercel Marketplace).
+• Storage: Vercel Blob (configured with private access for evidence files).
+• Caching & Rate Limiting: Vercel KV (Upstash) for tracking IP/subnet requests.
+• UI/UX Styling: Clean, minimal, and premium interface using saturated pastel 
+  accents. The onboarding flow for reporting must be extremely low-friction to 
+  support users in distress.
+
+2. DATABASE SCHEMA (NEON POSTGRES)
+--------------------------------------------------------------------------------
+Use an ORM like Prisma or Drizzle to intrinsically protect against SQL Injection 
+via parameterized queries.
+
+• Admins Table: id (UUID), username, password_hash (Argon2id), role, mfa_secret.
+• Reports Table: id (UUID), tracking_code (high-entropy string), category, 
+  platform, description (encrypted at rest), status, created_at.
+• Attachments Table: id (UUID), report_id, blob_url, file_type.
+• Audit Logs Table: id (UUID), admin_id, action, timestamp.
+
+3. VULNERABILITY MITIGATION & SECURITY PROTOCOLS
+--------------------------------------------------------------------------------
+Building a hardened system requires defense-in-depth:
+• SQL Injection (SQLi): Strictly enforced through ORM usage. No raw SQL 
+  concatenation.
+• Cross-Site Scripting (XSS): Next.js escapes output by default. Any rich-text 
+  input must be sanitized via DOMPurify before rendering in the admin panel. 
+  Implement a strict Content Security Policy (CSP).
+• Malicious File Uploads / Metadata Leaks: Evidence images must have EXIF data 
+  (GPS location, device info) stripped. Use Vercel Blob's client-side upload 
+  tokens to bypass serverless timeouts, but ensure a background process or Edge 
+  function sanitizes the files. Enforce strict MIME-type validation.
+• Insecure Direct Object References (IDOR): Reports are accessed via 
+  non-sequential tracking codes, not auto-incrementing database IDs (e.g., no 
+  /report/1 or /report/2).
+• Bot Protection & Billing Attacks: Cloudflare Turnstile integrated on the front 
+  end. Vercel KV Edge middleware to throttle requests before they invoke database 
+  connections.
+
+4. PHASED IMPLEMENTATION ROADMAP
+--------------------------------------------------------------------------------
+Phase 1: Environment & Schema (Week 1)
+• Initialize Next.js project and link to Vercel.
+• Provision Neon Postgres and Vercel KV via the Vercel Marketplace.
+• Define Prisma/Drizzle schemas and run initial migrations.
+
+Phase 2: Public Reporting Portal (Week 2)
+• Develop the low-friction UI with minimal pastel accents.
+• Build the submission form with Turnstile verification.
+• Implement the Vercel Blob client-side upload flow for evidence.
+• Ensure the server drops all request IP and User-Agent metadata to maintain 
+  zero-knowledge anonymity.
+
+Phase 3: Rate Limiting & Edge Security (Week 3)
+• Write Next.js middleware (middleware.ts) utilizing Vercel KV to block abusive 
+  IPs or subnets from spamming the submission endpoint.
+• Configure Vercel security headers (HSTS, X-Frame-Options, CSP).
+
+Phase 4: Secure Admin Dashboard (Week 4)
+• Implement multi-factor authentication (TOTP) for administrative login.
+• Build the dashboard to review reports, view private Blobs via securely signed 
+  URLs, and update report statuses.
+• Wire up the immutable audit log to record every admin action.
+
+5. DEPLOYMENT & MAINTENANCE
+--------------------------------------------------------------------------------
+• Keep all database connection strings and JWT secrets in Vercel's Environment 
+  Variables dashboard.
+• Run automated dependency audits regularly.
+• Monitor Vercel KV rate-limit hits to adjust thresholds against potential Layer 
+  7 DDoS attempts.
