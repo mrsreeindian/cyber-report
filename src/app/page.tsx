@@ -13,14 +13,18 @@ export default function Home() {
           </div>
           
           <h1 className="hero-title delay-200 animate-fade-in" style={{ opacity: 0 }}>
-            Speak up safely.<br/>We protect your identity.
+            You're not alone.<br/>We're here to listen.
           </h1>
           
           <p className="hero-subtitle delay-300 animate-fade-in" style={{ opacity: 0 }}>
-            A highly secure, zero-knowledge platform designed for whistleblowers and those needing to report sensitive incidents without fear of exposure.
+            We know it takes courage to speak up. This is a safe, zero-knowledge space for you to share your story without fear. We will protect your identity every step of the way.
           </p>
+
+          <div className="human-quote delay-400 animate-fade-in" style={{ opacity: 0 }}>
+            "Your secret is safe with us."
+          </div>
           
-          <div className="delay-300 animate-fade-in" style={{ opacity: 0, marginTop: '1rem' }}>
+          <div className="delay-500 animate-fade-in" style={{ opacity: 0, marginTop: '1.5rem' }}>
             <Link href="/report" className="btn btn-primary">
               Submit Anonymous Report
             </Link>
@@ -33,24 +37,24 @@ export default function Home() {
           <div className="feature-icon">
             <EyeOff size={24} />
           </div>
-          <h3 className="feature-title">Zero Metadata</h3>
-          <p className="feature-desc">We strip all IP addresses, User-Agents, and file EXIF data. Your identity remains entirely unknown to us.</p>
+          <h3 className="feature-title">No Tracking, Ever</h3>
+          <p className="feature-desc">We strip away all IP addresses, device info, and file metadata. To us, you're just a voice that deserves to be heard.</p>
         </div>
         
         <div className="feature-card">
           <div className="feature-icon">
             <Lock size={24} />
           </div>
-          <h3 className="feature-title">Encrypted at Rest</h3>
-          <p className="feature-desc">All report descriptions and sensitive fields are encrypted in our databases. We cannot read them without explicit access.</p>
+          <h3 className="feature-title">Vault-Level Security</h3>
+          <p className="feature-desc">Everything you share is locked down with encryption. Nobody can read your story without explicit authorization.</p>
         </div>
         
         <div className="feature-card">
           <div className="feature-icon">
             <Shield size={24} />
           </div>
-          <h3 className="feature-title">Immutable Audit</h3>
-          <p className="feature-desc">Our systems use strict Role-Based Access Control and maintain an immutable log of all administrative actions.</p>
+          <h3 className="feature-title">Honest & Transparent</h3>
+          <p className="feature-desc">We hold ourselves accountable. Every administrative action is permanently logged so nothing is ever swept under the rug.</p>
         </div>
       </div>
     </>
