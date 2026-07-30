@@ -14,8 +14,27 @@ export default function ReportPage() {
   const [formData, setFormData] = useState({
     category: '',
     platform: '',
-    description: ''
+    description: '',
+    evidence: null as string | null
   });
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > 10 * 1024 * 1024) {
+        alert('File is too large. Max size is 10MB.');
+        e.target.value = '';
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setFormData({ ...formData, evidence: event.target?.result as string });
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setFormData({ ...formData, evidence: null });
+    }
+  };
   
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -118,7 +137,7 @@ export default function ReportPage() {
 
         <div className="form-group">
           <label className="form-label">Evidence (Optional)</label>
-          <input type="file" className="form-input" style={{ padding: '0.5rem' }} />
+          <input type="file" className="form-input" style={{ padding: '0.5rem' }} accept="image/*" onChange={handleFileChange} />
           <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginTop: '0.25rem' }}>
             Max 10MB. We will automatically strip EXIF metadata from images.
           </span>
