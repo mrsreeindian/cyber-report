@@ -1,4 +1,4 @@
-import { FileText, Search, Shield, Filter, LogOut } from 'lucide-react';
+import { FileText, Search, Shield, Filter, LogOut, Download } from 'lucide-react';
 import Link from 'next/link';
 import { prisma } from '@/lib/prisma';
 
@@ -85,9 +85,14 @@ export default async function AdminDashboard({ searchParams }: { searchParams: P
               style={{ padding: '0.5rem 1rem' }} 
             />
           </div>
-          <button type="submit" className="btn btn-secondary" style={{ padding: '0.5rem 1rem' }}>
-            <Search size={16} /> Search
-          </button>
+          <div style={{ display: 'flex', gap: '0.5rem' }}>
+            <button type="submit" className="btn btn-secondary" style={{ padding: '0.5rem 1rem' }}>
+              <Search size={16} /> Search
+            </button>
+            <a href={`/admin/dashboard/export${q ? `?q=${encodeURIComponent(q)}` : ''}`} className="btn btn-primary" style={{ padding: '0.5rem 1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <Download size={16} /> Export to Excel
+            </a>
+          </div>
         </form>
         
         <div className="table-responsive">
