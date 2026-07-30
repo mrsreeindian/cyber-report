@@ -65,43 +65,44 @@ export default function ReportPage() {
 
   if (isSuccess) {
     return (
-      <div className="card animate-fade-in" style={{ textAlign: 'center' }}>
-        <div className="success-icon">
-          <ShieldAlert size={40} />
+      <div className="card animate-fade-in" style={{ textAlign: 'center', padding: '4rem 3rem', maxWidth: '800px', margin: '4rem auto' }}>
+        <div className="success-icon" style={{ width: '100px', height: '100px', margin: '0 auto 2.5rem' }}>
+          <ShieldAlert size={48} />
         </div>
-        <h2 style={{ fontSize: '1.75rem', marginBottom: '1rem', color: 'var(--success)' }}>Report Submitted Securely</h2>
-        <p style={{ color: 'var(--text-secondary)' }}>
-          Your report has been encrypted and securely stored. Please save your tracking code. 
-          This is the <strong>ONLY</strong> way to check the status or add information later.
+        <h2 style={{ fontSize: '2.5rem', marginBottom: '1.5rem', color: 'var(--success)', letterSpacing: '-0.03em' }}>Your Voice Was Heard</h2>
+        <p style={{ color: 'var(--text-secondary)', fontSize: '1.2rem', lineHeight: '1.6', marginBottom: '2rem' }}>
+          We have securely encrypted and safely stored your truth. Please copy and save your unique tracking code below. 
+          This is the <strong>only</strong> key to check the status or follow up.
         </p>
         
-        <div className="tracking-code-box">
+        <div className="tracking-code-box" style={{ fontSize: '2rem', padding: '2rem' }}>
           {trackingCode}
         </div>
         
-        <p style={{ color: 'var(--danger)', fontSize: '0.875rem', marginBottom: '2rem' }}>
-          Warning: If you lose this code, we cannot recover it. We do not know who you are.
+        <p style={{ color: 'var(--danger)', fontSize: '1rem', marginBottom: '3rem', maxWidth: '500px', margin: '0 auto 3rem auto', opacity: 0.8 }}>
+          <em>Note: We do not know who you are. If you lose this code, we cannot recover it.</em>
         </p>
         
-        <Link href="/" className="btn btn-secondary">
-          Return to Home
+        <Link href="/" className="btn btn-secondary" style={{ padding: '1rem 2.5rem', fontSize: '1.1rem' }}>
+          Return to Safety
         </Link>
       </div>
     );
   }
 
   return (
-    <div className="card animate-fade-in">
-      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '2rem' }}>
-        <ShieldAlert color="var(--primary)" size={28} />
-        <h2 style={{ fontSize: '1.5rem', fontWeight: 600 }}>Anonymous Report</h2>
+    <div className="card animate-fade-in" style={{ maxWidth: '850px', margin: '3rem auto', padding: '4rem' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '3rem', textAlign: 'center' }}>
+        <div className="hero-badge delay-100 animate-fade-in" style={{ marginBottom: '1.5rem', letterSpacing: '0.15em', fontSize: '0.8rem', padding: '0.6rem 1.5rem' }}>
+          We're Here For You
+        </div>
+        <h2 style={{ fontSize: '2.5rem', fontWeight: 700, letterSpacing: '-0.03em', marginBottom: '1rem' }}>Share Your Truth</h2>
+        <p style={{ color: 'var(--text-secondary)', fontSize: '1.15rem', maxWidth: '600px', lineHeight: '1.6' }}>
+          Take a deep breath. You are completely safe here. We don't log IPs or device details. Please share as much as you're comfortable with.
+        </p>
       </div>
-      
-      <p style={{ color: 'var(--text-secondary)', marginBottom: '2rem', fontSize: '0.95rem' }}>
-        This connection is secure. We do not log your IP address. Please provide as much detail as possible.
-      </p>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} style={{ marginTop: '2rem' }}>
         <div className="form-group">
           <label className="form-label">Category</label>
           <select 
@@ -130,14 +131,15 @@ export default function ReportPage() {
           />
         </div>
 
-        <div className="form-group">
-          <label className="form-label">Description</label>
+        <div className="form-group" style={{ marginBottom: '2.5rem' }}>
+          <label className="form-label" style={{ marginBottom: '0.75rem', fontSize: '1rem' }}>What happened?</label>
           <textarea 
             className="form-textarea" 
-            placeholder="Please describe the incident in detail..."
+            placeholder="Please take your time and describe the incident in detail..."
             required
             value={formData.description}
             onChange={(e) => setFormData({...formData, description: e.target.value})}
+            style={{ minHeight: '200px', fontSize: '1.1rem', lineHeight: '1.6' }}
           ></textarea>
         </div>
 
@@ -157,12 +159,12 @@ export default function ReportPage() {
         <button 
           type="submit" 
           className="btn btn-primary" 
-          style={{ width: '100%' }}
+          style={{ width: '100%', padding: '1.25rem', fontSize: '1.15rem', marginTop: '1rem' }}
           disabled={isSubmitting || !formData.category || !formData.platform || !formData.description}
         >
-          {isSubmitting ? 'Encrypting & Submitting...' : (
+          {isSubmitting ? 'Encrypting & Safely Submitting...' : (
             <>
-              Submit Securely <Send size={18} />
+              Submit Securely <Send size={20} />
             </>
           )}
         </button>
