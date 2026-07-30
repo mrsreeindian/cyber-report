@@ -53,13 +53,13 @@ body {
 body::before, body::after {
   content: '';
   position: fixed;
-  width: 60vw;
-  height: 60vw;
+  width: 70vw;
+  height: 70vw;
   border-radius: 50%;
-  filter: blur(100px);
+  filter: blur(160px);
   z-index: -1;
   animation: float 20s infinite alternate ease-in-out;
-  opacity: 0.4; /* Slightly more opaque for light mode */
+  opacity: 0.5; /* Slightly more opaque for light mode */
 }
 
 body::before {
@@ -110,6 +110,25 @@ a {
   flex-direction: column;
   position: relative;
   z-index: 1;
+}
+
+/* Heavenly Atmospheric Haze */
+.app-container::after {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  z-index: 9999;
+  background: radial-gradient(circle at 50% -20%, rgba(255, 255, 255, 0.6) 0%, transparent 60%),
+              radial-gradient(circle at 50% 120%, rgba(255, 255, 255, 0.3) 0%, transparent 60%);
+  mix-blend-mode: screen;
+  opacity: 0.9;
+  animation: haze-breath 12s infinite alternate ease-in-out;
+}
+
+@keyframes haze-breath {
+  0% { opacity: 0.5; }
+  100% { opacity: 0.9; }
 }
 
 /* Header */
@@ -758,4 +777,12 @@ html.dark .table-header-row {
 
 html.dark .content-box {
   background: rgba(0,0,0,0.2);
+}
+
+/* Dark Mode Heavenly Haze */
+html.dark .app-container::after {
+  background: radial-gradient(circle at 50% -20%, rgba(129, 140, 248, 0.2) 0%, transparent 60%),
+              radial-gradient(circle at 50% 120%, rgba(45, 212, 191, 0.1) 0%, transparent 60%);
+  mix-blend-mode: color-dodge;
+  opacity: 0.7;
 }
