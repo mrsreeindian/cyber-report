@@ -30,6 +30,9 @@ model Report {
   status       String       @default("pending")
   createdAt    DateTime     @default(now())
   attachments  Attachment[]
+
+  @@index([status])
+  @@index([createdAt])
 }
 
 model Attachment {
@@ -39,6 +42,8 @@ model Attachment {
   blobUrl   String
   fileType  String
   createdAt DateTime @default(now())
+
+  @@index([reportId])
 }
 
 model AuditLog {

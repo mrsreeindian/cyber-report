@@ -83,7 +83,8 @@ export default function NetworkCanvas() {
 
     const initParticles = () => {
       particles = [];
-      const numParticles = Math.floor((canvas.width * canvas.height) / 12000);
+      let numParticles = Math.floor((canvas.width * canvas.height) / 15000);
+      if (numParticles > 80) numParticles = 80; // Performance limit to prevent O(N^2) CPU spike
       for (let i = 0; i < numParticles; i++) {
         particles.push(new Particle());
       }
@@ -100,7 +101,9 @@ export default function NetworkCanvas() {
     }
     initParticles();
 
+    let isVisible = true;
     const animate = () => {
+      if (!isVisible) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       const isDark = document.documentElement.classList.contains('dark');
       
@@ -146,7 +149,14 @@ export default function NetworkCanvas() {
       animationFrameId = requestAnimationFrame(animate);
     };
 
-    animate();
+    const observer = new IntersectionObserver((entries) => {
+      isVisible = entries[0].isIntersecting;
+      if (isVisible) {
+        cancelAnimationFrame(animationFrameId);
+        animate();
+      }
+    });
+    observer.observe(canvas);
 
     return () => {
       window.removeEventListener('resize', resize);
@@ -155,6 +165,7 @@ export default function NetworkCanvas() {
         parent.removeEventListener('mouseleave', handleMouseLeave);
       }
       cancelAnimationFrame(animationFrameId);
+      observer.disconnect();
     };
   }, []);
 

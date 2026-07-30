@@ -9,21 +9,27 @@ export default async function AdminDashboard({ searchParams }: { searchParams: P
   const resolvedParams = await searchParams;
   const q = resolvedParams.q || '';
 
-  // Fetch real reports from the database
-  const reports = await prisma.report.findMany({
-    where: q ? {
-      OR: [
-        { trackingCode: { contains: q, mode: 'insensitive' } },
-        { category: { contains: q, mode: 'insensitive' } },
-        { platform: { contains: q, mode: 'insensitive' } },
-        { status: { contains: q, mode: 'insensitive' } }
-      ]
-    } : undefined,
-    orderBy: { createdAt: 'desc' }
+  // Fetch database counts safely to prevent RAM explosion
+  const whereClause = q ? {
+    OR: [
+      { trackingCode: { contains: q, mode: 'insensitive' } },
+      { category: { contains: q, mode: 'insensitive' } },
+      { platform: { contains: q, mode: 'insensitive' } },
+      { status: { contains: q, mode: 'insensitive' } }
+    ]
+  } : {};
+
+  const totalReports = await prisma.report.count({ where: q ? whereClause : undefined });
+  const pendingReports = await prisma.report.count({ 
+    where: q ? { AND: [whereClause, { status: 'pending' }] } : { status: 'pending' } 
   });
-  
-  const totalReports = reports.length;
-  const pendingReports = reports.filter(r => r.status === 'pending').length;
+
+  // Fetch limited reports for the table view
+  const reports = await prisma.report.findMany({
+    where: q ? whereClause : undefined,
+    orderBy: { createdAt: 'desc' },
+    take: 100 // Cap to prevent large payload bottlenecks
+  });
 
   return (
     <div className="animate-fade-in" style={{ width: '100%', maxWidth: '1200px', margin: '0 auto' }}>
