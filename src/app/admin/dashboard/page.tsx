@@ -98,7 +98,7 @@ export default async function AdminDashboard({ searchParams }: { searchParams: P
         <div className="table-responsive">
           <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', minWidth: '600px' }}>
           <thead>
-            <tr style={{ backgroundColor: 'rgba(255,255,255,0.7)', borderBottom: '1px solid var(--border)' }}>
+            <tr className="table-header-row" style={{ borderBottom: '1px solid var(--border)' }}>
               <th style={{ padding: '1rem 1.5rem', color: 'var(--text-secondary)', fontWeight: 500 }}>Tracking Code</th>
               <th style={{ padding: '1rem 1.5rem', color: 'var(--text-secondary)', fontWeight: 500 }}>Category</th>
               <th style={{ padding: '1rem 1.5rem', color: 'var(--text-secondary)', fontWeight: 500 }}>Status</th>

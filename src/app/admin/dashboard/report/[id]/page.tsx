@@ -65,8 +65,7 @@ export default async function ReportDetail({ params }: { params: Promise<{ id: s
         </div>
 
         <h3 style={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: '1rem' }}>Description</h3>
-        <div style={{ 
-          background: 'rgba(255,255,255,0.7)', 
+        <div className="content-box" style={{ 
           padding: '1.5rem', 
           borderRadius: 'var(--radius-md)',
           border: '1px solid var(--border)',
@@ -84,11 +83,10 @@ export default async function ReportDetail({ params }: { params: Promise<{ id: s
           </h3>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '1rem' }}>
             {report.attachments.map((attachment) => (
-              <div key={attachment.id} style={{ 
+              <div key={attachment.id} className="content-box" style={{ 
                 borderRadius: 'var(--radius-md)', 
                 overflow: 'hidden', 
                 border: '1px solid var(--border)',
-                background: 'rgba(255,255,255,0.7)',
                 padding: '0.5rem'
               }}>
                 <a href={attachment.blobUrl} target="_blank" rel="noreferrer" style={{ display: 'block' }}>

@@ -591,3 +591,134 @@ tr:hover td {
     flex-wrap: wrap;
   }
 }
+
+html.dark {
+  /* Dark mode palette */
+  --primary: #00f0ff; 
+  --primary-hover: #00c3ff;
+  --secondary: #7000ff; 
+  --accent: #ff0055; 
+  
+  --background: #03040a; 
+  --surface: rgba(255, 255, 255, 0.03); 
+  --surface-hover: rgba(255, 255, 255, 0.08);
+  --glass-border: rgba(255, 255, 255, 0.05);
+  --glass-highlight: rgba(255, 255, 255, 0.15);
+  --glass-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  
+  --shadow-glow-primary: 0 0 20px rgba(0, 240, 255, 0.3), 0 0 40px rgba(0, 240, 255, 0.1);
+  --shadow-glow-secondary: 0 0 20px rgba(112, 0, 255, 0.3);
+}
+
+html.dark body::before, html.dark body::after {
+  opacity: 0.15;
+}
+
+html.dark .header {
+  background: rgba(3, 4, 10, 0.4);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+}
+
+html.dark .hero-badge {
+  background: rgba(0, 240, 255, 0.05);
+  border: 1px solid rgba(0, 240, 255, 0.2);
+  box-shadow: inset 0 0 20px rgba(0, 240, 255, 0.05);
+}
+
+html.dark .hero-title {
+  background: linear-gradient(135deg, #ffffff 20%, var(--text-secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.5));
+}
+
+html.dark .btn-primary {
+  background: linear-gradient(135deg, var(--primary), #0099ff);
+  color: #000000;
+}
+
+html.dark .btn-primary:hover {
+  box-shadow: 0 0 30px rgba(0, 240, 255, 0.6);
+}
+
+html.dark .btn-secondary {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+html.dark .card:hover, html.dark .glass-panel:hover {
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6);
+}
+
+html.dark .form-input, html.dark .form-textarea, html.dark .form-select {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+html.dark .form-input::placeholder, html.dark .form-textarea::placeholder {
+  color: rgba(255,255,255,0.3);
+}
+
+html.dark .form-input:focus, html.dark .form-textarea:focus, html.dark .form-select:focus {
+  background: rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 0 3px rgba(0, 240, 255, 0.15), inset 0 0 10px rgba(0, 240, 255, 0.05);
+}
+
+html.dark .feature-card {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+}
+
+html.dark .feature-card::after {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+}
+
+html.dark .feature-card:hover {
+  border-color: rgba(0, 240, 255, 0.3);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), var(--shadow-glow-primary);
+}
+
+html.dark .feature-icon {
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  box-shadow: inset 0 0 20px rgba(0, 240, 255, 0.1);
+}
+
+html.dark .tracking-code-box {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  box-shadow: inset 0 0 20px rgba(0, 240, 255, 0.05);
+}
+
+html.dark .table-toolbar {
+  background: rgba(0,0,0,0.2);
+}
+
+html.dark th {
+  background: rgba(0,0,0,0.3);
+}
+
+html.dark td {
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+
+html.dark tr:hover td {
+  background: rgba(255,255,255,0.02);
+}
+
+/* Theme Toggle Classes */
+.table-header-row {
+  background-color: rgba(255,255,255,0.7);
+}
+
+.content-box {
+  background: rgba(255,255,255,0.7);
+}
+
+html.dark .table-header-row {
+  background-color: rgba(0,0,0,0.2);
+}
+
+html.dark .content-box {
+  background: rgba(0,0,0,0.2);
+}

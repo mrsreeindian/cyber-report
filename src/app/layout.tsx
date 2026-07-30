@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import ThemeToggle from '@/components/ThemeToggle';
 
 export const metadata: Metadata = {
   title: 'Behind The Smiles',
@@ -26,7 +27,8 @@ export default function RootLayout({
               <div className="logo-dot"></div>
               Behind The Smiles
             </div>
-            <nav>
+            <nav style={{ display: 'flex', alignItems: 'center' }}>
+              <ThemeToggle />
               <a href="/report" className="btn btn-secondary" style={{ padding: '0.5rem 1rem', fontSize: '0.875rem' }}>
                 Make a Report
               </a>
