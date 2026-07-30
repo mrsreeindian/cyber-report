@@ -21,17 +21,16 @@ export async function loginAdmin(formData: FormData) {
   const reqHeaders = await headers();
   const ip = reqHeaders.get('x-forwarded-for') || '';
 
-  const turnstileFormData = new URLSearchParams();
-  turnstileFormData.append('secret', process.env.TURNSTILE_SECRET || '');
-  turnstileFormData.append('response', turnstileToken);
-  turnstileFormData.append('remoteip', ip);
-
   let turnstileResult;
   try {
     const siteverify = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
       method: 'POST',
-      body: turnstileFormData.toString(),
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        secret: process.env.TURNSTILE_SECRET || '',
+        response: turnstileToken,
+        remoteip: ip
+      })
     });
     if (!siteverify.ok) {
       const text = await siteverify.text();
