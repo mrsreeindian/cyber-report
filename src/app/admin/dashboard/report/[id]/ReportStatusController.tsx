@@ -30,7 +30,7 @@ export default function ReportStatusController({ reportId, initialStatus }: Repo
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '1rem' }}>
+    <div className="mobile-flex-col" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '1rem', width: '100%' }}>
       <span style={{ 
         padding: '0.5rem 1rem', 
         borderRadius: '999px', 
@@ -45,7 +45,7 @@ export default function ReportStatusController({ reportId, initialStatus }: Repo
         {isPending && <span style={{ marginLeft: '0.5rem', opacity: 0.7, fontSize: '0.75rem' }}>(Updating...)</span>}
       </span>
       
-      <div style={{ display: 'flex', gap: '0.5rem' }}>
+      <div className="mobile-wrap" style={{ display: 'flex', gap: '0.5rem', width: '100%' }}>
         <button 
           onClick={() => handleStatusChange('approved')} 
           disabled={isPending || currentStatus === 'approved'}
