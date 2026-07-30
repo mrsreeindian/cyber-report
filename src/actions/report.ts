@@ -2,14 +2,44 @@
 
 import { prisma } from '@/lib/prisma';
 import { randomBytes } from 'crypto';
+import { headers } from 'next/headers';
 
-export async function createReport(data: { category: string, platform: string, description: string, evidence?: string | null }) {
+export async function createReport(data: { category: string, platform: string, description: string, evidence?: string | null, turnstileToken?: string }) {
   try {
     if (!data || typeof data.category !== 'string' || typeof data.platform !== 'string' || typeof data.description !== 'string') {
       return { success: false, error: 'Invalid or missing required fields' };
     }
     if (!data.category.trim() || !data.platform.trim() || !data.description.trim()) {
       return { success: false, error: 'Fields cannot be empty' };
+    }
+
+    if (!data.turnstileToken) {
+      return { success: false, error: 'CAPTCHA verification missing' };
+    }
+
+    const reqHeaders = await headers();
+    const ip = reqHeaders.get('x-forwarded-for') || '';
+    
+    const turnstileFormData = new URLSearchParams();
+    turnstileFormData.append('secret', process.env.TURNSTILE_SECRET || '');
+    turnstileFormData.append('response', data.turnstileToken);
+    turnstileFormData.append('remoteip', ip);
+
+    let turnstileResult;
+    try {
+      const siteverify = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+        method: 'POST',
+        body: turnstileFormData,
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+      });
+      if (!siteverify.ok) throw new Error(`siteverify ${siteverify.status}`);
+      turnstileResult = await siteverify.json();
+    } catch (err) {
+      return { success: false, error: 'CAPTCHA verification failed (network error)' };
+    }
+
+    if (!turnstileResult.success) {
+      return { success: false, error: 'CAPTCHA verification failed' };
     }
 
     // Generate a random tracking code in the format XXXX-XXXX-XXXX

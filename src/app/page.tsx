@@ -1,28 +1,34 @@
 import { Shield, Lock, EyeOff } from 'lucide-react';
 import Link from 'next/link';
+import NetworkCanvas from '@/components/NetworkCanvas';
 
 export default function Home() {
   return (
-    <div className="hero-section animate-fade-in">
-      <div className="hero-badge delay-100 animate-fade-in" style={{ opacity: 0 }}>
-        End-to-End Encrypted • 100% Anonymous
-      </div>
-      
-      <h1 className="hero-title delay-200 animate-fade-in" style={{ opacity: 0 }}>
-        Speak up safely.<br/>We protect your identity.
-      </h1>
-      
-      <p className="hero-subtitle delay-300 animate-fade-in" style={{ opacity: 0 }}>
-        A highly secure, zero-knowledge platform designed for whistleblowers and those needing to report sensitive incidents without fear of exposure.
-      </p>
-      
-      <div className="delay-300 animate-fade-in" style={{ opacity: 0, marginTop: '1rem' }}>
-        <Link href="/report" className="btn btn-primary">
-          Submit Anonymous Report
-        </Link>
+    <>
+      <div style={{ position: 'relative', width: '100%', padding: '2rem 0' }}>
+        <NetworkCanvas />
+        <div className="hero-section animate-fade-in" style={{ position: 'relative', zIndex: 1 }}>
+          <div className="hero-badge delay-100 animate-fade-in" style={{ opacity: 0 }}>
+            End-to-End Encrypted • 100% Anonymous
+          </div>
+          
+          <h1 className="hero-title delay-200 animate-fade-in" style={{ opacity: 0 }}>
+            Speak up safely.<br/>We protect your identity.
+          </h1>
+          
+          <p className="hero-subtitle delay-300 animate-fade-in" style={{ opacity: 0 }}>
+            A highly secure, zero-knowledge platform designed for whistleblowers and those needing to report sensitive incidents without fear of exposure.
+          </p>
+          
+          <div className="delay-300 animate-fade-in" style={{ opacity: 0, marginTop: '1rem' }}>
+            <Link href="/report" className="btn btn-primary">
+              Submit Anonymous Report
+            </Link>
+          </div>
+        </div>
       </div>
 
-      <div className="feature-grid">
+      <div className="feature-grid" style={{ position: 'relative', zIndex: 1 }}>
         <div className="feature-card">
           <div className="feature-icon">
             <EyeOff size={24} />
@@ -47,6 +53,6 @@ export default function Home() {
           <p className="feature-desc">Our systems use strict Role-Based Access Control and maintain an immutable log of all administrative actions.</p>
         </div>
       </div>
-    </div>
+    </>
   );
 }

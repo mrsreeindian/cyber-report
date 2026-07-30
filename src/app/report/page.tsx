@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { ShieldAlert, Send } from 'lucide-react';
 import Link from 'next/link';
-import { Turnstile } from '@marsidev/react-turnstile';
+import Script from 'next/script';
 import { createReport } from '@/actions/report';
 
 export default function ReportPage() {
@@ -40,8 +40,10 @@ export default function ReportPage() {
     e.preventDefault();
     setIsSubmitting(true);
     
+    const turnstileToken = (document.querySelector('[name="cf-turnstile-response"]') as HTMLInputElement)?.value || '';
+    
     try {
-      const result = await createReport(formData);
+      const result = await createReport({ ...formData, turnstileToken });
       if (result.success && result.trackingCode) {
         setTrackingCode(result.trackingCode);
         setIsSuccess(true);
@@ -52,6 +54,10 @@ export default function ReportPage() {
       console.error(error);
       const errorMessage = error instanceof Error ? error.message : 'An error occurred while submitting your report. Please try again.';
       alert(errorMessage);
+      // Reset Turnstile on failure
+      if ((window as any).turnstile) {
+        (window as any).turnstile.reset();
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -144,7 +150,8 @@ export default function ReportPage() {
         </div>
         
         <div className="form-group" style={{ marginTop: '1rem', marginBottom: '2rem' }}>
-           <Turnstile siteKey="1x00000000000000000000AA" />
+          <Script src="https://challenges.cloudflare.com/turnstile/v0/api.js" strategy="lazyOnload" />
+          <div className="cf-turnstile" data-sitekey="0x4AAAAAAECGAVwIvGYojfWi" data-action="turnstile-spin-v2"></div>
         </div>
 
         <button 

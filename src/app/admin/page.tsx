@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { ShieldCheck, LockKeyhole, Eye, EyeOff } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import Script from 'next/script';
 
 import { loginAdmin } from '@/actions/auth';
 
@@ -22,17 +23,22 @@ export default function AdminLogin() {
     const formData = new FormData();
     formData.append('username', username);
     formData.append('password', password);
+    
+    const turnstileToken = (document.querySelector('[name="cf-turnstile-response"]') as HTMLInputElement)?.value || '';
+    formData.append('cf-turnstile-response', turnstileToken);
 
     try {
       const result = await loginAdmin(formData);
       if (result && !result.success) {
         setError(result.error || 'Login failed');
         setIsSubmitting(false);
+        if ((window as any).turnstile) (window as any).turnstile.reset();
       }
     } catch (err) {
       // In Next.js, a successful redirect inside a server action throws an error that should not be caught locally.
       // However, if we do catch it, we just ignore it as the redirect happens anyway.
       setIsSubmitting(false);
+      if ((window as any).turnstile) (window as any).turnstile.reset();
     }
   };
 
@@ -104,6 +110,11 @@ export default function AdminLogin() {
               {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
             </button>
           </div>
+        </div>
+
+        <div className="form-group" style={{ marginTop: '0.5rem', marginBottom: '1rem' }}>
+          <Script src="https://challenges.cloudflare.com/turnstile/v0/api.js" strategy="lazyOnload" />
+          <div className="cf-turnstile" data-sitekey="0x4AAAAAAECGAVwIvGYojfWi" data-action="turnstile-spin-v2"></div>
         </div>
 
         <button 
