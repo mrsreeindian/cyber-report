@@ -47,8 +47,8 @@ export default function Home() {
           <div className="feature-icon" style={{ margin: '0 0 1.75rem 0' }}>
             <Lock size={28} />
           </div>
-          <h3 className="feature-title">Ironclad Encryption</h3>
-          <p className="feature-desc">Your story is locked in a vault using military-grade encryption. No one—not even our developers—can read it without the proper keys.</p>
+          <h3 className="feature-title">Locked Tight</h3>
+          <p className="feature-desc">We scramble your words the second you hit send. It's locked away so securely that nobody—not even the people who built this site—can peek at your story.</p>
         </div>
         
         <div className="feature-card" style={{ alignItems: 'flex-start', textAlign: 'left', padding: '3rem 2.5rem' }}>
