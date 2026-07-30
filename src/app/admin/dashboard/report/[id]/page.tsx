@@ -66,7 +66,7 @@ export default async function ReportDetail({ params }: { params: Promise<{ id: s
 
         <h3 style={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: '1rem' }}>Description</h3>
         <div style={{ 
-          background: 'rgba(0,0,0,0.2)', 
+          background: 'rgba(255,255,255,0.7)', 
           padding: '1.5rem', 
           borderRadius: 'var(--radius-md)',
           border: '1px solid var(--border)',
@@ -88,7 +88,7 @@ export default async function ReportDetail({ params }: { params: Promise<{ id: s
                 borderRadius: 'var(--radius-md)', 
                 overflow: 'hidden', 
                 border: '1px solid var(--border)',
-                background: 'rgba(0,0,0,0.3)',
+                background: 'rgba(255,255,255,0.7)',
                 padding: '0.5rem'
               }}>
                 <a href={attachment.blobUrl} target="_blank" rel="noreferrer" style={{ display: 'block' }}>
