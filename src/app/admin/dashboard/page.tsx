@@ -103,8 +103,8 @@ export default async function AdminDashboard() {
                       padding: '0.25rem 0.75rem', 
                       borderRadius: '999px', 
                       fontSize: '0.75rem', 
-                      background: report.status === 'pending' ? 'rgba(251, 191, 36, 0.1)' : 'rgba(52, 211, 153, 0.1)', 
-                      color: report.status === 'pending' ? 'var(--warning)' : 'var(--success)' 
+                      background: report.status === 'pending' || report.status === 'standby' ? 'rgba(251, 191, 36, 0.1)' : report.status === 'rejected' ? 'rgba(248, 113, 113, 0.1)' : 'rgba(52, 211, 153, 0.1)', 
+                      color: report.status === 'pending' || report.status === 'standby' ? 'var(--warning)' : report.status === 'rejected' ? 'var(--danger)' : 'var(--success)' 
                     }}>
                       {report.status.charAt(0).toUpperCase() + report.status.slice(1)}
                     </span>
