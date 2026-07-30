@@ -2,7 +2,6 @@ import { prisma } from '@/lib/prisma';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, Calendar, Tag, Monitor, ShieldAlert, Image as ImageIcon } from 'lucide-react';
-import Image from 'next/image';
 
 export const dynamic = 'force-dynamic';
 
