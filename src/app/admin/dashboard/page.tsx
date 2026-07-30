@@ -16,10 +16,10 @@ export default async function AdminDashboard() {
 
   return (
     <div className="animate-fade-in" style={{ width: '100%', maxWidth: '1200px', margin: '0 auto' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
+      <div className="dashboard-header">
         <div>
           <h1 style={{ fontSize: '2rem', fontWeight: 700 }}>Dashboard</h1>
-          <p style={{ color: 'var(--text-secondary)' }}>Welcome back, sugham.</p>
+          <p style={{ color: 'var(--text-secondary)' }}>Welcome back, admin.</p>
         </div>
         
         <Link href="/admin" className="btn btn-secondary" style={{ padding: '0.5rem 1rem', fontSize: '0.875rem' }}>
@@ -62,7 +62,7 @@ export default async function AdminDashboard() {
       <h2 style={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: '1.5rem' }}>Recent Reports</h2>
       
       <div className="glass-panel" style={{ overflow: 'hidden' }}>
-        <div style={{ padding: '1rem 1.5rem', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div className="table-toolbar">
           <div className="form-group" style={{ marginBottom: 0, width: '300px' }}>
             <input type="text" className="form-input" placeholder="Search by Tracking Code..." style={{ padding: '0.5rem 1rem' }} />
           </div>
@@ -71,7 +71,8 @@ export default async function AdminDashboard() {
           </button>
         </div>
         
-        <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+        <div className="table-responsive">
+          <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', minWidth: '600px' }}>
           <thead>
             <tr style={{ backgroundColor: 'rgba(0,0,0,0.2)', borderBottom: '1px solid var(--border)' }}>
               <th style={{ padding: '1rem 1.5rem', color: 'var(--text-secondary)', fontWeight: 500 }}>Tracking Code</th>
@@ -121,6 +122,7 @@ export default async function AdminDashboard() {
             )}
           </tbody>
         </table>
+        </div>
       </div>
     </div>
   );
