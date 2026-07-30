@@ -98,7 +98,7 @@ a {
   padding: 1.25rem 2.5rem;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   background: rgba(3, 4, 10, 0.6);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
@@ -110,6 +110,9 @@ a {
 }
 
 .logo {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   font-weight: 800;
   font-size: 1.5rem;
   letter-spacing: -0.03em;
@@ -471,6 +474,19 @@ tr:hover td {
 @media (max-width: 768px) {
   .header {
     padding: 1rem 1.5rem;
+    justify-content: center;
+  }
+  
+  .logo {
+    position: static;
+    transform: none;
+    margin-bottom: 1rem;
+  }
+  
+  .header nav {
+    width: 100%;
+    display: flex;
+    justify-content: center;
   }
   
   .main-content {
