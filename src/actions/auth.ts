@@ -30,12 +30,17 @@ export async function loginAdmin(formData: FormData) {
   try {
     const siteverify = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
       method: 'POST',
-      body: turnstileFormData,
+      body: turnstileFormData.toString(),
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
     });
-    if (!siteverify.ok) throw new Error(`siteverify ${siteverify.status}`);
+    if (!siteverify.ok) {
+      const text = await siteverify.text();
+      console.error('Turnstile verification non-200 response:', siteverify.status, text);
+      throw new Error(`siteverify ${siteverify.status}`);
+    }
     turnstileResult = await siteverify.json();
   } catch (err) {
+    console.error('Turnstile network/parsing error:', err);
     return { success: false, error: 'CAPTCHA verification failed (network error)' };
   }
 
