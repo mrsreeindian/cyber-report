@@ -5,9 +5,10 @@ import { ArrowLeft, Calendar, Tag, Monitor, ShieldAlert, Image as ImageIcon } fr
 
 export const dynamic = 'force-dynamic';
 
-export default async function ReportDetail({ params }: { params: { id: string } }) {
+export default async function ReportDetail({ params }: { params: Promise<{ id: string }> }) {
+  const resolvedParams = await params;
   const report = await prisma.report.findUnique({
-    where: { id: params.id },
+    where: { id: resolvedParams.id },
     include: { attachments: true }
   });
 
