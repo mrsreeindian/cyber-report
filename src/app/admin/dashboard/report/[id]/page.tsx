@@ -1,8 +1,8 @@
 import { prisma } from '@/lib/prisma';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeft, Calendar, Tag, Monitor, ShieldAlert, Image as ImageIcon, Check, X, Clock } from 'lucide-react';
-import { updateReportStatus } from '@/actions/admin';
+import { ArrowLeft, Calendar, Tag, Monitor, ShieldAlert, Image as ImageIcon } from 'lucide-react';
+import ReportStatusController from './ReportStatusController';
 
 export const dynamic = 'force-dynamic';
 
@@ -30,37 +30,7 @@ export default async function ReportDetail({ params }: { params: Promise<{ id: s
           </h1>
         </div>
         
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '1rem' }}>
-          <span style={{ 
-            padding: '0.5rem 1rem', 
-            borderRadius: '999px', 
-            fontSize: '0.875rem', 
-            fontWeight: 600,
-            background: report.status === 'pending' || report.status === 'standby' ? 'rgba(251, 191, 36, 0.1)' : report.status === 'rejected' ? 'rgba(248, 113, 113, 0.1)' : 'rgba(52, 211, 153, 0.1)', 
-            color: report.status === 'pending' || report.status === 'standby' ? 'var(--warning)' : report.status === 'rejected' ? 'var(--danger)' : 'var(--success)',
-            display: 'flex', alignItems: 'center'
-          }}>
-            Status: {report.status.charAt(0).toUpperCase() + report.status.slice(1)}
-          </span>
-          
-          <div style={{ display: 'flex', gap: '0.5rem' }}>
-            <form action={updateReportStatus.bind(null, report.id, 'approved')}>
-              <button type="submit" className="btn btn-secondary" style={{ padding: '0.5rem 1rem', fontSize: '0.875rem', color: 'var(--success)' }}>
-                <Check size={16} /> Approve
-              </button>
-            </form>
-            <form action={updateReportStatus.bind(null, report.id, 'standby')}>
-              <button type="submit" className="btn btn-secondary" style={{ padding: '0.5rem 1rem', fontSize: '0.875rem', color: 'var(--warning)' }}>
-                <Clock size={16} /> Standby
-              </button>
-            </form>
-            <form action={updateReportStatus.bind(null, report.id, 'rejected')}>
-              <button type="submit" className="btn btn-secondary" style={{ padding: '0.5rem 1rem', fontSize: '0.875rem', color: 'var(--danger)' }}>
-                <X size={16} /> Reject
-              </button>
-            </form>
-          </div>
-        </div>
+        <ReportStatusController reportId={report.id} initialStatus={report.status} />
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem', marginBottom: '2rem' }}>
