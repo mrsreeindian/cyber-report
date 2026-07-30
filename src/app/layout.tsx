@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Secure Reporting Platform',
+  title: 'Behind The Smiles',
   description: 'An anonymous and secure platform for reporting incidents.',
 };
 
@@ -24,7 +24,7 @@ export default function RootLayout({
           <header className="header">
             <div className="logo">
               <div className="logo-dot"></div>
-              WhisperSecure
+              Behind The Smiles
             </div>
             <nav>
               <a href="/report" className="btn btn-secondary" style={{ padding: '0.5rem 1rem', fontSize: '0.875rem' }}>
