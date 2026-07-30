@@ -39,24 +39,24 @@ export default function Home() {
           <div className="feature-icon" style={{ margin: '0 0 1.75rem 0' }}>
             <EyeOff size={28} />
           </div>
-          <h3 className="feature-title">Completely Invisible</h3>
-          <p className="feature-desc">We strip away all IP addresses, device signatures, and file metadata before anything is saved. To our servers, you are simply a ghost.</p>
+          <h3 className="feature-title">Privacy First</h3>
+          <p className="feature-desc">We don't collect your IP address or track what device you're using. Any photos you share are scrubbed of hidden location data before they even leave your screen.</p>
         </div>
         
         <div className="feature-card" style={{ alignItems: 'flex-start', textAlign: 'left', padding: '3rem 2.5rem' }}>
           <div className="feature-icon" style={{ margin: '0 0 1.75rem 0' }}>
             <Lock size={28} />
           </div>
-          <h3 className="feature-title">Locked Tight</h3>
-          <p className="feature-desc">We scramble your words the second you hit send. It's locked away so securely that nobody—not even the people who built this site—can peek at your story.</p>
+          <h3 className="feature-title">Secure Storage</h3>
+          <p className="feature-desc">Your report is turned into unreadable code the moment it hits our servers. It's locked safely in our database, and only our dedicated response team has the key to read it.</p>
         </div>
         
         <div className="feature-card" style={{ alignItems: 'flex-start', textAlign: 'left', padding: '3rem 2.5rem' }}>
           <div className="feature-icon" style={{ margin: '0 0 1.75rem 0' }}>
             <HeartHandshake size={28} />
           </div>
-          <h3 className="feature-title">Built with Empathy</h3>
-          <p className="feature-desc">Technology is just a tool; compassion is our foundation. Every line of code here was written to ensure you have a safe harbor.</p>
+          <h3 className="feature-title">A Safe Harbor</h3>
+          <p className="feature-desc">We believe compassion is more important than code. This platform was built from the ground up to make sure you have a secure, judgment-free place to share your truth.</p>
         </div>
       </div>
     </>
