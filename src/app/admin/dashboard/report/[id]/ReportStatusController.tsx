@@ -45,7 +45,7 @@ export default function ReportStatusController({ reportId, initialStatus }: Repo
         {isPending && <span style={{ marginLeft: '0.5rem', opacity: 0.7, fontSize: '0.75rem' }}>(Updating...)</span>}
       </span>
       
-      <div className="mobile-wrap" style={{ display: 'flex', gap: '0.5rem', width: '100%' }}>
+      <div className="mobile-wrap" style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.5rem', width: '100%' }}>
         <button 
           onClick={() => handleStatusChange('approved')} 
           disabled={isPending || currentStatus === 'approved'}

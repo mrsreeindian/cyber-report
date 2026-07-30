@@ -496,16 +496,6 @@ tr:hover td {
   background: rgba(255,255,255,0.02);
 }
 
-/* Utilities */
-.mobile-flex-col {
-  flex-direction: column !important;
-  align-items: flex-start !important;
-}
-
-.mobile-wrap {
-  flex-wrap: wrap;
-}
-
 /* Animations */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(30px); }
@@ -589,5 +579,15 @@ tr:hover td {
     min-width: 120px;
     text-align: center;
     justify-content: center;
+  }
+
+  /* Utilities */
+  .mobile-flex-col {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+
+  .mobile-wrap {
+    flex-wrap: wrap;
   }
 }
