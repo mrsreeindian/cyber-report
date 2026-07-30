@@ -5,9 +5,21 @@ import { prisma } from '@/lib/prisma';
 // Server component
 export const dynamic = 'force-dynamic';
 
-export default async function AdminDashboard() {
+export default async function AdminDashboard({ searchParams }: { searchParams: Promise<{ q?: string }> }) {
+  const resolvedParams = await searchParams;
+  const q = resolvedParams.q || '';
+
   // Fetch real reports from the database
   const reports = await prisma.report.findMany({
+    where: q ? {
+      OR: [
+        { trackingCode: { contains: q, mode: 'insensitive' } },
+        { category: { contains: q, mode: 'insensitive' } },
+        { description: { contains: q, mode: 'insensitive' } },
+        { platform: { contains: q, mode: 'insensitive' } },
+        { status: { contains: q, mode: 'insensitive' } }
+      ]
+    } : undefined,
     orderBy: { createdAt: 'desc' }
   });
   
@@ -62,14 +74,21 @@ export default async function AdminDashboard() {
       <h2 style={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: '1.5rem' }}>Recent Reports</h2>
       
       <div className="glass-panel" style={{ overflow: 'hidden' }}>
-        <div className="table-toolbar">
+        <form className="table-toolbar" action="/admin/dashboard" method="GET">
           <div className="form-group" style={{ marginBottom: 0, width: '300px' }}>
-            <input type="text" className="form-input" placeholder="Search by Tracking Code..." style={{ padding: '0.5rem 1rem' }} />
+            <input 
+              type="text" 
+              name="q"
+              defaultValue={q}
+              className="form-input" 
+              placeholder="Search by keyword, platform, tracking code..." 
+              style={{ padding: '0.5rem 1rem' }} 
+            />
           </div>
-          <button className="btn btn-secondary" style={{ padding: '0.5rem 1rem' }}>
-            <Filter size={16} /> Filter
+          <button type="submit" className="btn btn-secondary" style={{ padding: '0.5rem 1rem' }}>
+            <Search size={16} /> Search
           </button>
-        </div>
+        </form>
         
         <div className="table-responsive">
           <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', minWidth: '600px' }}>
