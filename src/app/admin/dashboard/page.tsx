@@ -113,9 +113,9 @@ export default async function AdminDashboard() {
                     {new Date(report.createdAt).toLocaleDateString()}
                   </td>
                   <td style={{ padding: '1rem 1.5rem' }}>
-                    <button className="btn btn-secondary" style={{ padding: '0.375rem 0.75rem', fontSize: '0.75rem' }}>
+                    <Link href={`/admin/dashboard/report/${report.id}`} className="btn btn-secondary" style={{ padding: '0.375rem 0.75rem', fontSize: '0.75rem' }}>
                       Review
-                    </button>
+                    </Link>
                   </td>
                 </tr>
               ))
