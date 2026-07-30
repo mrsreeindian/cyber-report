@@ -11,9 +11,7 @@ export async function updateReportStatus(reportId: string, status: string) {
     });
     revalidatePath(`/admin/dashboard/report/${reportId}`);
     revalidatePath(`/admin/dashboard`);
-    return { success: true };
   } catch (error) {
     console.error('Failed to update report status:', error);
-    return { success: false, error: 'Failed to update status' };
   }
 }

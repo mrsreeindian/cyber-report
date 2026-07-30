@@ -31,7 +31,8 @@ export async function loginAdmin(formData: FormData) {
     }
 
     // Set secure HTTP-only cookie
-    cookies().set('admin_session', admin.id, {
+    const cookieStore = await cookies();
+    cookieStore.set('admin_session', admin.id, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
