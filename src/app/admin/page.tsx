@@ -4,24 +4,35 @@ import { useState } from 'react';
 import { ShieldCheck, LockKeyhole } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
+import { loginAdmin } from '@/actions/auth';
+
 export default function AdminLogin() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState('');
   const router = useRouter();
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setError('');
     
-    // In a real implementation, you would call an API here that hashes the password
-    // and compares it against the database, then returns a secure HTTP-only cookie.
-    
-    setTimeout(() => {
+    const formData = new FormData();
+    formData.append('username', username);
+    formData.append('password', password);
+
+    try {
+      const result = await loginAdmin(formData);
+      if (result && !result.success) {
+        setError(result.error || 'Login failed');
+        setIsSubmitting(false);
+      }
+    } catch (err) {
+      // In Next.js, a successful redirect inside a server action throws an error that should not be caught locally.
+      // However, if we do catch it, we just ignore it as the redirect happens anyway.
       setIsSubmitting(false);
-      // Simulating a successful login redirect
-      router.push('/admin/dashboard');
-    }, 1000);
+    }
   };
 
   return (
@@ -43,6 +54,11 @@ export default function AdminLogin() {
       </div>
 
       <form onSubmit={handleLogin}>
+        {error && (
+          <div style={{ padding: '0.75rem', backgroundColor: 'rgba(248, 113, 113, 0.1)', color: 'var(--danger)', borderRadius: 'var(--radius-md)', marginBottom: '1.5rem', fontSize: '0.875rem', border: '1px solid rgba(248, 113, 113, 0.3)', textAlign: 'center' }}>
+            {error}
+          </div>
+        )}
         <div className="form-group">
           <label className="form-label">Username</label>
           <input 
