@@ -3,6 +3,7 @@
 import { prisma } from '@/lib/prisma';
 import { randomBytes } from 'crypto';
 import { headers } from 'next/headers';
+import { encrypt } from '@/lib/encryption';
 
 export async function createReport(data: { category: string, platform: string, description: string, evidence?: string | null, turnstileToken?: string }) {
   try {
@@ -54,7 +55,7 @@ export async function createReport(data: { category: string, platform: string, d
         trackingCode,
         category: data.category,
         platform: data.platform,
-        description: data.description, // Encrypted at rest in production
+        description: encrypt(data.description),
         status: 'pending'
       }
     });

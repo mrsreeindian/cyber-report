@@ -15,7 +15,6 @@ export default async function AdminDashboard({ searchParams }: { searchParams: P
       OR: [
         { trackingCode: { contains: q, mode: 'insensitive' } },
         { category: { contains: q, mode: 'insensitive' } },
-        { description: { contains: q, mode: 'insensitive' } },
         { platform: { contains: q, mode: 'insensitive' } },
         { status: { contains: q, mode: 'insensitive' } }
       ]

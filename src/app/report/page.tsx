@@ -26,11 +26,33 @@ export default function ReportPage() {
         e.target.value = '';
         return;
       }
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        setFormData({ ...formData, evidence: event.target?.result as string });
-      };
-      reader.readAsDataURL(file);
+      
+      if (file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          const img = new Image();
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            const ctx = canvas.getContext('2d');
+            if (ctx) {
+              ctx.drawImage(img, 0, 0);
+              // Exporting to Data URL automatically strips EXIF metadata (making the claim factually correct)
+              const dataUrl = canvas.toDataURL(file.type);
+              setFormData({ ...formData, evidence: dataUrl });
+            }
+          };
+          img.src = event.target?.result as string;
+        };
+        reader.readAsDataURL(file);
+      } else {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          setFormData({ ...formData, evidence: event.target?.result as string });
+        };
+        reader.readAsDataURL(file);
+      }
     } else {
       setFormData({ ...formData, evidence: null });
     }

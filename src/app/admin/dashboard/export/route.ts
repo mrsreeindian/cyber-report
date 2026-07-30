@@ -1,5 +1,6 @@
 import { prisma } from '@/lib/prisma';
 import { NextResponse } from 'next/server';
+import { decrypt } from '@/lib/encryption';
 
 export const dynamic = 'force-dynamic';
 
@@ -13,7 +14,6 @@ export async function GET(request: Request) {
         OR: [
           { trackingCode: { contains: q, mode: 'insensitive' } },
           { category: { contains: q, mode: 'insensitive' } },
-          { description: { contains: q, mode: 'insensitive' } },
           { platform: { contains: q, mode: 'insensitive' } },
           { status: { contains: q, mode: 'insensitive' } }
         ]
@@ -45,7 +45,7 @@ export async function GET(request: Request) {
         escapeCsv(report.platform),
         escapeCsv(report.status),
         escapeCsv(new Date(report.createdAt).toLocaleString()),
-        escapeCsv(report.description),
+        escapeCsv(decrypt(report.description)),
         escapeCsv(attachmentLinks)
       ].join(',');
     });

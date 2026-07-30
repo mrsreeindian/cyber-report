@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, Calendar, Tag, Monitor, ShieldAlert, Image as ImageIcon } from 'lucide-react';
 import ReportStatusController from './ReportStatusController';
+import { decrypt } from '@/lib/encryption';
 
 export const dynamic = 'force-dynamic';
 
@@ -72,7 +73,7 @@ export default async function ReportDetail({ params }: { params: Promise<{ id: s
           whiteSpace: 'pre-wrap',
           lineHeight: '1.6'
         }}>
-          {report.description}
+          {decrypt(report.description)}
         </div>
       </div>
 
