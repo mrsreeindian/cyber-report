@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { HeartHandshake } from 'lucide-react';
+import ThemeToggle from '@/components/ThemeToggle';
 
 export const metadata: Metadata = {
   title: 'Behind The Smiles',
@@ -28,6 +29,7 @@ export default function RootLayout({
               Behind The Smiles
             </a>
             <nav style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+              <ThemeToggle />
               <a href="/report" className="btn btn-primary">
                 Make a Report
               </a>
