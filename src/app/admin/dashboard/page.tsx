@@ -1,6 +1,7 @@
 import { FileText, Search, Shield, Filter, LogOut, Download } from 'lucide-react';
 import Link from 'next/link';
 import { prisma } from '@/lib/prisma';
+import { Prisma } from '@prisma/client';
 
 // Server component
 export const dynamic = 'force-dynamic';
@@ -10,23 +11,23 @@ export default async function AdminDashboard({ searchParams }: { searchParams: P
   const q = resolvedParams.q || '';
 
   // Fetch database counts safely to prevent RAM explosion
-  const whereClause = q ? {
+  const whereClause: Prisma.ReportWhereInput | undefined = q ? {
     OR: [
       { trackingCode: { contains: q, mode: 'insensitive' } },
       { category: { contains: q, mode: 'insensitive' } },
       { platform: { contains: q, mode: 'insensitive' } },
       { status: { contains: q, mode: 'insensitive' } }
     ]
-  } : {};
+  } : undefined;
 
-  const totalReports = await prisma.report.count({ where: q ? whereClause : undefined });
+  const totalReports = await prisma.report.count({ where: whereClause });
   const pendingReports = await prisma.report.count({ 
-    where: q ? { AND: [whereClause, { status: 'pending' }] } : { status: 'pending' } 
+    where: whereClause ? { AND: [whereClause, { status: 'pending' }] } : { status: 'pending' } 
   });
 
   // Fetch limited reports for the table view
   const reports = await prisma.report.findMany({
-    where: q ? whereClause : undefined,
+    where: whereClause,
     orderBy: { createdAt: 'desc' },
     take: 100 // Cap to prevent large payload bottlenecks
   });
