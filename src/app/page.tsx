@@ -1,13 +1,10 @@
 import { Shield, Lock, EyeOff, HeartHandshake } from 'lucide-react';
 import Link from 'next/link';
-import NetworkCanvas from '@/components/NetworkCanvas';
-
 export default function Home() {
   return (
     <>
-      <div style={{ position: 'relative', width: '100%', padding: '6rem 0 8rem 0', display: 'flex', justifyContent: 'center' }}>
-        <NetworkCanvas />
-        <div className="hero-section animate-fade-in glass-panel" style={{ position: 'relative', zIndex: 1, maxWidth: '1000px', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', padding: '4rem 3rem', marginTop: '2rem' }}>
+      <div style={{ position: 'relative', width: '100%', padding: '6rem 0 4rem 0', display: 'flex', justifyContent: 'center' }}>
+        <div className="hero-section animate-fade-in" style={{ position: 'relative', zIndex: 1, maxWidth: '900px', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', padding: '2rem 1rem' }}>
           
           <div className="hero-badge delay-100 animate-fade-in" style={{ opacity: 0, marginBottom: '2rem', letterSpacing: '0.15em', fontSize: '0.8rem', padding: '0.6rem 1.5rem' }}>
             A Safe Space for Your Truth
