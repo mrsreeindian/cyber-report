@@ -22,6 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body>
+        <div className="mesh-orb-3"></div>
         <div className="app-container">
           <header className="header" style={{ display: 'flex', justifyContent: 'space-between', padding: '1.5rem 3rem' }}>
             <a href="/" className="logo" style={{ position: 'relative', left: '0', transform: 'none', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>

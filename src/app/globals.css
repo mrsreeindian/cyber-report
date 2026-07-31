@@ -66,20 +66,46 @@ body::before {
   background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
   top: -20%;
   left: -10%;
+  animation: float-1 25s infinite alternate ease-in-out;
 }
 
 body::after {
   background: radial-gradient(circle, var(--secondary) 0%, transparent 70%);
   bottom: -20%;
   right: -10%;
-  animation-delay: -10s;
+  animation: float-2 20s infinite alternate ease-in-out;
 }
 
-@keyframes float {
-  0% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 0.3; }
-  33% { transform: translate(8%, 8%) scale(1.15) rotate(8deg); opacity: 0.5; }
-  66% { transform: translate(-5%, 12%) scale(0.9) rotate(-5deg); opacity: 0.4; }
-  100% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 0.3; }
+.mesh-orb-3 {
+  content: '';
+  position: fixed;
+  width: 60vw;
+  height: 60vw;
+  border-radius: 50%;
+  filter: blur(160px);
+  z-index: -1;
+  background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+  top: 30%;
+  left: 20%;
+  animation: float-3 30s infinite alternate ease-in-out;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+@keyframes float-1 {
+  0% { transform: translate(0, 0) scale(1); opacity: 0.5; }
+  50% { transform: translate(10%, 15%) scale(1.2); opacity: 0.7; }
+  100% { transform: translate(-5%, 5%) scale(1); opacity: 0.5; }
+}
+@keyframes float-2 {
+  0% { transform: translate(0, 0) scale(1); opacity: 0.4; }
+  50% { transform: translate(-10%, -15%) scale(1.1); opacity: 0.6; }
+  100% { transform: translate(5%, -5%) scale(0.9); opacity: 0.4; }
+}
+@keyframes float-3 {
+  0% { transform: translate(0, 0) scale(1); opacity: 0.3; }
+  50% { transform: translate(15%, -10%) scale(1.3); opacity: 0.6; }
+  100% { transform: translate(-10%, 15%) scale(1); opacity: 0.3; }
 }
 
 @keyframes shimmer {
@@ -369,18 +395,13 @@ a {
 
 .feature-card {
   padding: 2.5rem;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.05) 100%);
-  backdrop-filter: blur(16px) saturate(160%);
-  -webkit-backdrop-filter: blur(16px) saturate(160%);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  border-top: 1px solid rgba(255, 255, 255, 0.6);
-  border-left: 1px solid rgba(255, 255, 255, 0.5);
-  box-shadow: 
-    0 16px 32px rgba(0, 0, 0, 0.05),
-    inset 0 1px 1px rgba(255, 255, 255, 0.9),
-    inset 0 -1px 2px rgba(255, 255, 255, 0.4),
-    inset 0 20px 20px -20px rgba(255, 255, 255, 0.8);
-  border-radius: 28px;
+  background: var(--surface);
+  backdrop-filter: blur(40px) saturate(200%);
+  -webkit-backdrop-filter: blur(40px) saturate(200%);
+  border: 1px solid var(--glass-border);
+  border-top: 1px solid var(--glass-highlight);
+  border-left: 1px solid var(--glass-highlight);
+  border-radius: 32px;
   transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
   overflow: hidden;
@@ -390,16 +411,6 @@ a {
   text-align: center;
   box-shadow: var(--glass-shadow);
   transform-style: preserve-3d;
-}
-
-.feature-card::after {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
-  transform: translateX(-150%) skewX(-45deg);
-  z-index: 1;
-  pointer-events: none;
 }
 
 .feature-card::before {
@@ -415,16 +426,11 @@ a {
   transform: translateY(-15px) scale(1.03) perspective(1000px) rotateX(2deg);
   border-color: rgba(79, 70, 229, 0.5);
   box-shadow: 0 30px 60px rgba(0, 0, 0, 0.12), 0 0 50px rgba(79, 70, 229, 0.2);
-  backdrop-filter: blur(50px) saturate(200%);
   z-index: 10;
 }
 
 .feature-card:hover::before {
   opacity: 1;
-}
-
-.feature-card:hover::after {
-  animation: shimmer 1.2s ease-in-out;
 }
 
 .feature-icon {
@@ -652,8 +658,8 @@ html.dark {
   --shadow-glow-secondary: 0 0 15px rgba(45, 212, 191, 0.15);
 }
 
-html.dark body::before, html.dark body::after {
-  opacity: 0.1; /* Reduced background orb intensity */
+html.dark body::before, html.dark body::after, html.dark .mesh-orb-3 {
+  opacity: 0.7; /* Full vibrant mesh background in dark mode */
 }
 
 html.dark .header {
@@ -721,29 +727,17 @@ html.dark .form-input:focus, html.dark .form-textarea:focus, html.dark .form-sel
 }
 
 html.dark .feature-card {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.01) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-top: 1px solid rgba(255, 255, 255, 0.15);
-  border-left: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 
-    0 16px 32px rgba(0, 0, 0, 0.4),
-    inset 0 1px 1px rgba(255, 255, 255, 0.15),
-    inset 0 -1px 2px rgba(255, 255, 255, 0.02),
-    inset 0 20px 20px -20px rgba(255, 255, 255, 0.1);
-}
-
-html.dark .feature-card::after {
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+  background: var(--surface);
+  border: 1px solid var(--glass-border);
+  border-top: 1px solid var(--glass-highlight);
+  border-left: 1px solid var(--glass-highlight);
+  box-shadow: var(--glass-shadow);
 }
 
 html.dark .feature-card:hover {
   border-color: rgba(129, 140, 248, 0.4);
   border-top-color: rgba(129, 140, 248, 0.6);
-  box-shadow: 
-    0 20px 40px rgba(0, 0, 0, 0.5), 
-    var(--shadow-glow-primary),
-    inset 0 1px 1px rgba(255, 255, 255, 0.2),
-    inset 0 20px 20px -20px rgba(255, 255, 255, 0.15);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), var(--shadow-glow-primary);
 }
 
 html.dark .feature-icon {
