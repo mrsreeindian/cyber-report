@@ -43,7 +43,7 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="card animate-fade-in" style={{ maxWidth: '450px', marginTop: '10vh' }}>
+    <div className="card animate-fade-in" style={{ maxWidth: '450px', margin: '10vh auto 0', width: '100%' }}>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '2rem' }}>
         <div style={{ 
           width: '64px', height: '64px', 
