@@ -3,8 +3,8 @@ import Link from 'next/link';
 export default function Home() {
   return (
     <>
-      <div style={{ position: 'relative', width: '100%', padding: '6rem 0 4rem 0', display: 'flex', justifyContent: 'center' }}>
-        <div className="hero-section animate-fade-in" style={{ position: 'relative', zIndex: 1, maxWidth: '900px', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', padding: '2rem 1rem' }}>
+      <div style={{ position: 'relative', width: '100%', padding: '4rem 0', display: 'flex', justifyContent: 'flex-start' }}>
+        <div className="hero-section animate-fade-in" style={{ position: 'relative', zIndex: 1, maxWidth: '900px', width: '100%', padding: '0 1rem' }}>
           
           <div className="hero-badge delay-100 animate-fade-in" style={{ opacity: 0, marginBottom: '2rem', letterSpacing: '0.15em', fontSize: '0.8rem', padding: '0.6rem 1.5rem' }}>
             A Safe Space for Your Truth
@@ -14,13 +14,13 @@ export default function Home() {
             Speak freely.<br/>We're listening.
           </h1>
           
-          <div className="delay-300 animate-fade-in" style={{ opacity: 0, marginTop: '2.5rem', display: 'flex', justifyContent: 'center' }}>
-            <p className="hero-subtitle" style={{ margin: 0, fontSize: '1.25rem', maxWidth: '700px', textAlign: 'center', lineHeight: '1.6', color: 'var(--text-secondary)' }}>
+          <div className="delay-300 animate-fade-in" style={{ opacity: 0, marginTop: '2rem', display: 'flex', justifyContent: 'flex-start' }}>
+            <p className="hero-subtitle" style={{ margin: 0 }}>
               It takes courage to step forward. This platform was built by people who care, specifically to protect you. No tracking. No footprints. Just your voice.
             </p>
           </div>
 
-          <div className="delay-400 animate-fade-in" style={{ opacity: 0, marginTop: '3.5rem', display: 'flex', gap: '2rem', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
+          <div className="delay-400 animate-fade-in" style={{ opacity: 0, marginTop: '3rem', display: 'flex', gap: '2rem', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'flex-start' }}>
             <Link href="/report" className="btn btn-primary" style={{ padding: '1.1rem 2.75rem', fontSize: '1.15rem' }}>
               Submit Anonymous Report
             </Link>

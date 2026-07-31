@@ -23,18 +23,31 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <body>
         <div className="app-container">
-          <header className="header">
+          <aside className="sidebar">
             <a href="/" className="logo">
               <HeartHandshake size={24} color="var(--primary)" />
               Behind The Smiles
             </a>
-            <nav style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-              <ThemeToggle />
-              <a href="/report" className="btn btn-primary">
-                Make a Report
+            
+            <nav className="sidebar-nav">
+              <a href="/" className="sidebar-link">
+                <span style={{ fontSize: '1.05rem' }}>Home</span>
+              </a>
+              <a href="/report" className="sidebar-link">
+                <span style={{ fontSize: '1.05rem' }}>Submit Report</span>
+              </a>
+              <a href="/admin" className="sidebar-link">
+                <span style={{ fontSize: '1.05rem' }}>Admin</span>
               </a>
             </nav>
-          </header>
+            
+            <div className="sidebar-footer">
+              <ThemeToggle />
+              <a href="/report" className="btn btn-primary" style={{ width: '100%' }}>
+                Make a Report
+              </a>
+            </div>
+          </aside>
           <main className="main-content">
             {children}
           </main>
