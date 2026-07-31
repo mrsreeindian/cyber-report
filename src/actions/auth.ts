@@ -21,30 +21,35 @@ export async function loginAdmin(formData: FormData) {
   const reqHeaders = await headers();
   const ip = reqHeaders.get('x-forwarded-for') || '';
 
-  let turnstileResult;
-  try {
-    const siteverify = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        secret: process.env.TURNSTILE_SECRET || '',
-        response: turnstileToken,
-        remoteip: ip
-      })
-    });
-    if (!siteverify.ok) {
-      const text = await siteverify.text();
-      console.error('Turnstile verification non-200 response:', siteverify.status, text);
-      throw new Error(`siteverify ${siteverify.status}`);
-    }
-    turnstileResult = await siteverify.json();
-  } catch (err) {
-    console.error('Turnstile network/parsing error:', err);
-    return { success: false, error: 'CAPTCHA verification failed (network error)' };
-  }
+  if (process.env.TURNSTILE_SECRET) {
+    let turnstileResult;
+    try {
+      const formData = new URLSearchParams();
+      formData.append('secret', process.env.TURNSTILE_SECRET);
+      formData.append('response', turnstileToken);
+      formData.append('remoteip', ip);
 
-  if (!turnstileResult.success) {
-    return { success: false, error: 'CAPTCHA verification failed' };
+      const siteverify = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+        method: 'POST',
+        body: formData
+      });
+      
+      if (!siteverify.ok) {
+        const text = await siteverify.text();
+        console.error('Turnstile verification non-200 response:', siteverify.status, text);
+        throw new Error(`siteverify ${siteverify.status}`);
+      }
+      turnstileResult = await siteverify.json();
+    } catch (err) {
+      console.error('Turnstile network/parsing error:', err);
+      return { success: false, error: 'CAPTCHA verification failed (network error)' };
+    }
+
+    if (!turnstileResult.success) {
+      return { success: false, error: 'CAPTCHA verification failed' };
+    }
+  } else {
+    console.warn('TURNSTILE_SECRET is not set, skipping CAPTCHA verification');
   }
 
   try {
