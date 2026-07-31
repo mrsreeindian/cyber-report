@@ -130,6 +130,15 @@ body::after {
   left: 0;
   z-index: 100;
   box-shadow: 5px 0 30px rgba(0, 0, 0, 0.02);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sidebar.closed {
+  transform: translateX(-100%);
+}
+
+.sidebar.open {
+  transform: translateX(0);
 }
 
 .logo {
@@ -190,6 +199,11 @@ html.dark .sidebar-footer {
   flex-direction: column;
   padding: 3rem 4rem;
   margin-left: 280px; /* Offset for sidebar */
+  transition: margin-left 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.app-container.sidebar-closed .main-content {
+  margin-left: 0;
 }
 
 /* Frosted Glass Panels (Minimalist, Serene) */
@@ -478,33 +492,18 @@ html.dark tr:hover td {
   }
   
   .sidebar {
-    width: 100%;
-    min-height: auto;
-    position: relative;
-    border-right: none;
-    border-bottom: 1px solid var(--glass-border);
-    padding: 1.5rem;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+    width: 280px;
   }
   
-  .sidebar-nav {
-    display: none; /* In a real app, this would be a hamburger menu */
+  .app-container.sidebar-open .main-content {
+    margin-left: 280px;
   }
   
-  .logo {
-    margin-bottom: 0;
-  }
-  
-  .sidebar-footer {
-    padding: 0;
-    border: none;
-    flex-direction: row;
-  }
-  
-  .main-content {
+  .app-container.sidebar-closed .main-content {
     margin-left: 0;
+  }
+
+  .main-content {
     padding: 2rem 1.5rem;
   }
   
