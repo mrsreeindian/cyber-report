@@ -2,6 +2,7 @@ import { FileText, Search, Shield, Filter, LogOut, Download } from 'lucide-react
 import Link from 'next/link';
 import { prisma } from '@/lib/prisma';
 import { Prisma } from '@prisma/client';
+import ClearDataButton from '@/components/ClearDataButton';
 
 // Server component
 export const dynamic = 'force-dynamic';
@@ -44,6 +45,7 @@ export default async function AdminDashboard({ searchParams }: { searchParams: P
           <Link href="/admin/dashboard/survey" className="btn btn-primary" style={{ padding: '0.5rem 1rem', fontSize: '0.875rem' }}>
             Survey Analytics
           </Link>
+          <ClearDataButton />
           <Link href="/admin" className="btn btn-secondary" style={{ padding: '0.5rem 1rem', fontSize: '0.875rem' }}>
             <LogOut size={16} /> Logout
           </Link>

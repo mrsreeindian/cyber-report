@@ -15,3 +15,20 @@ export async function updateReportStatus(reportId: string, status: string) {
     console.error('Failed to update report status:', error);
   }
 }
+
+export async function clearAllData() {
+  try {
+    await prisma.attachment.deleteMany();
+    await prisma.auditLog.deleteMany();
+    await prisma.report.deleteMany();
+    await prisma.surveyResponse.deleteMany();
+    
+    revalidatePath('/admin/dashboard');
+    revalidatePath('/admin/dashboard/survey');
+    
+    return { success: true };
+  } catch (error) {
+    console.error('Failed to clear data:', error);
+    return { success: false, error: 'Failed to clear database' };
+  }
+}
