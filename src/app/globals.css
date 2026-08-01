@@ -290,10 +290,10 @@ html.dark .card:hover, html.dark .glass-panel:hover, html.dark .feature-card:hov
 
 .hero-title {
   font-family: 'Playfair Display', serif;
-  font-size: 5.5rem;
+  font-size: 3.75rem;
   font-weight: 600;
-  line-height: 1.05;
-  letter-spacing: -0.03em;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
   color: var(--text-primary);
   margin-bottom: 1.5rem;
 }
