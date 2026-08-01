@@ -426,7 +426,9 @@ html.dark .form-input, html.dark .form-textarea, html.dark .form-select {
 .dashboard-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1.5rem;
   margin-bottom: 2rem;
 }
 
@@ -436,6 +438,7 @@ html.dark .form-input, html.dark .form-textarea, html.dark .form-select {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
   gap: 1rem;
 }
 
@@ -486,18 +489,26 @@ html.dark tr:hover td {
 .delay-200 { animation-delay: 200ms; }
 .delay-300 { animation-delay: 300ms; }
 
+.sidebar-backdrop {
+  display: none !important;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
+  .sidebar-backdrop {
+    display: block !important;
+  }
   .app-container {
     flex-direction: column;
   }
   
   .sidebar {
     width: 280px;
+    z-index: 1000;
   }
   
   .app-container.sidebar-open .main-content {
-    margin-left: 280px;
+    margin-left: 0;
   }
   
   .app-container.sidebar-closed .main-content {
@@ -505,11 +516,15 @@ html.dark tr:hover td {
   }
 
   .main-content {
-    padding: 2rem 1.5rem;
+    padding: 4rem 1.5rem 2rem;
   }
   
   .hero-title {
-    font-size: 2.5rem;
+    font-size: 2.25rem;
+  }
+
+  .hero-section {
+    padding: 1rem 0 3rem;
   }
   
   .feature-grid {
@@ -520,5 +535,25 @@ html.dark tr:hover td {
     flex-direction: column;
     align-items: flex-start;
     gap: 1rem;
+  }
+
+  .form-group, .table-toolbar form {
+    width: 100% !important;
+  }
+
+  .btn {
+    width: 100%;
+    padding: 0.75rem 1rem;
+  }
+  
+  .dashboard-header .btn {
+    width: auto;
+  }
+  
+  .table-toolbar > div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
   }
 }

@@ -16,6 +16,22 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className={`app-container ${isOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
+      {/* Mobile Backdrop */}
+      {isOpen && (
+        <div 
+          className="sidebar-backdrop"
+          onClick={() => setIsOpen(false)}
+          style={{
+            position: 'fixed',
+            inset: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.4)',
+            backdropFilter: 'blur(4px)',
+            zIndex: 99,
+            display: 'block'
+          }}
+        />
+      )}
+      
       <aside className={`sidebar ${isOpen ? 'open' : 'closed'}`}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3rem' }}>
           <a href="/" className="logo" style={{ marginBottom: 0 }}>
