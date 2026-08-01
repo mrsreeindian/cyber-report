@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap');
 
 :root {
   /* Calming Green & Earthy Palette (Light Mode) */
@@ -8,12 +8,13 @@
   --accent: #a3b899; /* Soft mint */
   
   --background: #f4f1ea; /* Soft earthy beige */
-  --surface: rgba(255, 255, 255, 0.5); /* Frosted glass */
-  --surface-hover: rgba(255, 255, 255, 0.7);
+  --surface: rgba(255, 255, 255, 0.4); /* Thinner frosted glass */
+  --surface-hover: rgba(255, 255, 255, 0.6);
   
   --glass-border: rgba(255, 255, 255, 0.6);
-  --glass-highlight: rgba(255, 255, 255, 0.9);
-  --glass-shadow: 0 15px 35px rgba(44, 51, 46, 0.05); /* Soft depth */
+  --glass-highlight: linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 100%);
+  --glass-shadow: 0 40px 80px rgba(44, 51, 46, 0.04), 0 10px 20px rgba(44, 51, 46, 0.02); /* Multi-tiered depth */
+  --glass-shadow-hover: 0 50px 100px rgba(44, 51, 46, 0.08), 0 15px 30px rgba(44, 51, 46, 0.04);
   
   --text-primary: #2c332e; /* Deep forest slate */
   --text-secondary: #637067;
@@ -36,13 +37,14 @@ html.dark {
   --secondary: #b5a486; /* Soft warm earth */
   --accent: #5b8c70; 
   
-  --background: #151a17; /* Deep forest shadow */
-  --surface: rgba(30, 40, 35, 0.4); 
-  --surface-hover: rgba(40, 50, 45, 0.6);
+  --background: #101412; /* Deep forest shadow */
+  --surface: rgba(20, 26, 22, 0.4); 
+  --surface-hover: rgba(30, 40, 35, 0.6);
   
-  --glass-border: rgba(255, 255, 255, 0.06); 
-  --glass-highlight: rgba(255, 255, 255, 0.1);
-  --glass-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  --glass-border: rgba(255, 255, 255, 0.05); 
+  --glass-highlight: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+  --glass-shadow: 0 40px 80px rgba(0, 0, 0, 0.4), 0 10px 20px rgba(0, 0, 0, 0.2);
+  --glass-shadow-hover: 0 50px 100px rgba(0, 0, 0, 0.6), 0 15px 30px rgba(0, 0, 0, 0.3);
   
   --text-primary: #e1e6e3;
   --text-secondary: #8b9991;
@@ -67,9 +69,23 @@ body {
   overflow-x: hidden;
 }
 
+h1, h2, h3, h4, h5, h6, .font-serif {
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+}
+
+.tracking-wide {
+  letter-spacing: 0.05em;
+}
+
+.tracking-widest {
+  letter-spacing: 0.1em;
+}
+
 a {
   color: inherit;
   text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Soft Lighting Creating Depth */
@@ -117,23 +133,31 @@ body::after {
 /* Sidebar UI */
 .sidebar {
   width: 280px;
-  min-height: 100vh;
+  height: calc(100vh - 2rem);
+  margin: 1rem 0 1rem 1rem;
   background: var(--surface);
-  backdrop-filter: blur(32px) saturate(180%);
-  -webkit-backdrop-filter: blur(32px) saturate(180%);
-  border-right: 1px solid var(--glass-border);
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
   display: flex;
   flex-direction: column;
   padding: 2.5rem 1.5rem;
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 100;
-  box-shadow: 5px 0 30px rgba(0, 0, 0, 0.02);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 1000;
+  box-shadow: var(--glass-shadow);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s ease;
 }
 
-.sidebar.closed {
+.sidebar::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 1px;
+  background: var(--glass-highlight);
+  z-index: 1;
+}
   transform: translateX(-100%);
 }
 
@@ -172,13 +196,14 @@ body::after {
 }
 
 .sidebar-link:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.4);
   color: var(--primary);
-  transform: translateX(4px);
+  transform: translateX(6px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
 }
 
 html.dark .sidebar-link:hover {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .sidebar-footer {
@@ -210,22 +235,33 @@ html.dark .sidebar-footer {
 /* Frosted Glass Panels (Minimalist, Serene) */
 .card, .glass-panel, .feature-card {
   background: var(--surface);
-  backdrop-filter: blur(24px) saturate(160%);
-  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
   border-radius: var(--radius-xl);
-  padding: 2.5rem;
+  padding: 3rem;
   box-shadow: var(--glass-shadow);
   border: 1px solid var(--glass-border);
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Weightless glow effect on top edge */
+.card::before, .glass-panel::before, .feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 1px;
+  background: var(--glass-highlight);
+  z-index: 1;
 }
 
 .card:hover, .glass-panel:hover, .feature-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.08);
+  transform: translateY(-8px);
+  box-shadow: var(--glass-shadow-hover);
 }
 
 html.dark .card:hover, html.dark .glass-panel:hover, html.dark .feature-card:hover {
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+  box-shadow: var(--glass-shadow-hover);
 }
 
 /* Hero Section */
@@ -252,11 +288,13 @@ html.dark .card:hover, html.dark .glass-panel:hover, html.dark .feature-card:hov
 }
 
 .hero-title {
-  font-size: 3.5rem;
+  font-family: 'Playfair Display', serif;
+  font-size: 5.5rem;
   font-weight: 600;
-  line-height: 1.15;
-  letter-spacing: -0.02em;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
   color: var(--text-primary);
+  margin-bottom: 1.5rem;
 }
 
 .hero-subtitle {
@@ -281,14 +319,17 @@ html.dark .card:hover, html.dark .glass-panel:hover, html.dark .feature-card:hov
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.875rem 2rem;
+  padding: 1rem 2.5rem;
   border-radius: var(--radius-full);
   font-weight: 500;
-  font-size: 0.95rem;
-  transition: all 0.3s ease;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
   border: none;
-  gap: 0.5rem;
+  gap: 0.75rem;
+  position: relative;
+  overflow: hidden;
 }
 
 .btn-primary {
@@ -504,6 +545,9 @@ html.dark tr:hover td {
   
   .sidebar {
     width: 280px;
+    height: 100vh;
+    margin: 0;
+    border-radius: 0;
     z-index: 1000;
   }
   
