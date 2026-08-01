@@ -53,3 +53,10 @@ model AuditLog {
   action    String
   timestamp DateTime @default(now())
 }
+
+model SurveyResponse {
+  id           String   @id @default(uuid())
+  trackingCode String   @unique
+  answers      Json     // Store the survey answers as a JSON object
+  createdAt    DateTime @default(now())
+}

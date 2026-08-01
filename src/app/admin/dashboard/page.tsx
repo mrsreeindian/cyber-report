@@ -40,9 +40,14 @@ export default async function AdminDashboard({ searchParams }: { searchParams: P
           <p style={{ color: 'var(--text-secondary)' }}>Welcome back, admin.</p>
         </div>
         
-        <Link href="/admin" className="btn btn-secondary" style={{ padding: '0.5rem 1rem', fontSize: '0.875rem' }}>
-          <LogOut size={16} /> Logout
-        </Link>
+        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+          <Link href="/admin/dashboard/survey" className="btn btn-primary" style={{ padding: '0.5rem 1rem', fontSize: '0.875rem' }}>
+            Survey Analytics
+          </Link>
+          <Link href="/admin" className="btn btn-secondary" style={{ padding: '0.5rem 1rem', fontSize: '0.875rem' }}>
+            <LogOut size={16} /> Logout
+          </Link>
+        </div>
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1.5rem', marginBottom: '3rem' }}>

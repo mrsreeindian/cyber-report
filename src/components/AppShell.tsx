@@ -38,6 +38,9 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
           <a href="/report" className="sidebar-link">
             <span style={{ fontSize: '1.05rem' }}>Report</span>
           </a>
+          <a href="/survey" className="sidebar-link">
+            <span style={{ fontSize: '1.05rem' }}>Take Survey</span>
+          </a>
           {/* Admin link hidden per user request */}
         </nav>
         
