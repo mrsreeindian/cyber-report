@@ -16,7 +16,7 @@ export default function Home() {
           </h1>
           
           <div className="delay-300 animate-fade-in" style={{ opacity: 0, marginTop: '2.5rem', display: 'flex', justifyContent: 'flex-start', paddingLeft: '2rem', borderLeft: '2px solid var(--primary)' }}>
-            <p className="hero-subtitle" style={{ margin: 0, fontSize: '1.25rem' }}>
+            <p className="hero-subtitle" style={{ margin: 0, fontSize: '1.05rem' }}>
               It takes courage to step forward. This platform was built by people who care, specifically to protect you. No tracking. No footprints. Just your voice.
             </p>
           </div>
