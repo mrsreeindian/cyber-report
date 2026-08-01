@@ -5,12 +5,12 @@ import { HeartHandshake, Menu, X } from "lucide-react";
 import ThemeToggle from "@/components/ThemeToggle";
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
-  // Close sidebar on mobile by default
+  // Open sidebar on desktop by default, keep closed on mobile
   useEffect(() => {
-    if (window.innerWidth < 768) {
-      setIsOpen(false);
+    if (window.innerWidth > 768) {
+      setIsOpen(true);
     }
   }, []);
 
