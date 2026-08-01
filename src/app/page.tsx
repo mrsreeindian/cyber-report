@@ -45,7 +45,7 @@ export default function Home() {
           </div>
           
           {/* Card 2 - Staggered Down */}
-          <div className="feature-card delay-200 animate-fade-in" style={{ opacity: 0, transform: 'translateY(40px)', padding: '3.5rem 3rem', marginTop: '3rem' }}>
+          <div className="feature-card delay-200 animate-fade-in" style={{ opacity: 0, transform: 'translateY(40px)', padding: '3.5rem 3rem' }}>
             <div className="feature-icon" style={{ margin: '0 0 2rem 0', background: 'transparent', padding: 0, color: 'var(--primary)' }}>
               <Lock size={36} strokeWidth={1.5} />
             </div>
@@ -54,7 +54,7 @@ export default function Home() {
           </div>
           
           {/* Card 3 - Staggered Up */}
-          <div className="feature-card delay-300 animate-fade-in" style={{ opacity: 0, transform: 'translateY(0px)', padding: '3.5rem 3rem', marginTop: '-2rem' }}>
+          <div className="feature-card delay-300 animate-fade-in" style={{ opacity: 0, transform: 'translateY(0px)', padding: '3.5rem 3rem' }}>
             <div className="feature-icon" style={{ margin: '0 0 2rem 0', background: 'transparent', padding: 0, color: 'var(--primary)' }}>
               <HeartHandshake size={36} strokeWidth={1.5} />
             </div>
