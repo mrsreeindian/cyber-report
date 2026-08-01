@@ -99,7 +99,7 @@ const questions = [
 ];
 
 export default function SurveyPage() {
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState(-1);
   const [answers, setAnswers] = useState<Record<string, string | string[]>>({});
   const [otherText, setOtherText] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -172,6 +172,38 @@ export default function SurveyPage() {
         <Link href="/" className="btn btn-secondary">
           Return to Home
         </Link>
+      </div>
+    );
+  }
+  
+  if (currentStep === -1) {
+    return (
+      <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '70vh', textAlign: 'center', padding: '2rem 1rem' }}>
+        <div style={{ marginBottom: '2rem', background: 'rgba(155, 135, 245, 0.1)', padding: '1rem', borderRadius: '50%', color: 'var(--primary)' }}>
+          <CheckCircle2 size={48} />
+        </div>
+        <h1 style={{ fontSize: '3rem', fontWeight: 700, marginBottom: '1.5rem', lineHeight: 1.2 }}>
+          Cyberbullying Awareness Survey
+        </h1>
+        <p style={{ color: 'var(--text-secondary)', fontSize: '1.25rem', maxWidth: '600px', marginBottom: '3rem', lineHeight: 1.6 }}>
+          We are conducting this anonymous survey to better understand your experiences and awareness regarding cyberbullying and online harassment. Your feedback is crucial for making our digital spaces safer.
+        </p>
+        <div style={{ display: 'flex', gap: '1.5rem' }}>
+          <Link href="/" className="btn btn-secondary" style={{ padding: '0.875rem 2rem', fontSize: '1.1rem' }}>
+            <ArrowLeft size={20} /> Back Home
+          </Link>
+          <button 
+            onClick={() => setCurrentStep(0)} 
+            className="btn btn-primary"
+            style={{ padding: '0.875rem 2.5rem', fontSize: '1.1rem' }}
+          >
+            Start Survey <ChevronRight size={20} />
+          </button>
+        </div>
+        
+        <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', marginTop: '3rem', opacity: 0.7 }}>
+          * Your responses will be kept strictly confidential and anonymous.
+        </p>
       </div>
     );
   }
