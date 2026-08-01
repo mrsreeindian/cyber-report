@@ -37,12 +37,13 @@ export default async function SurveyAdminDashboard() {
                 <th style={{ padding: '1rem 1.5rem', color: 'var(--text-secondary)', fontWeight: 500 }}>Familiarity (Q1)</th>
                 <th style={{ padding: '1rem 1.5rem', color: 'var(--text-secondary)', fontWeight: 500 }}>Experienced? (Q2)</th>
                 <th style={{ padding: '1rem 1.5rem', color: 'var(--text-secondary)', fontWeight: 500 }}>Date</th>
+                <th style={{ padding: '1rem 1.5rem', color: 'var(--text-secondary)', fontWeight: 500 }}>Action</th>
               </tr>
             </thead>
             <tbody>
               {responses.length === 0 ? (
                 <tr>
-                  <td colSpan={4} style={{ padding: '2rem', textAlign: 'center', color: 'var(--text-secondary)' }}>
+                  <td colSpan={5} style={{ padding: '2rem', textAlign: 'center', color: 'var(--text-secondary)' }}>
                     No survey responses found.
                   </td>
                 </tr>
@@ -62,6 +63,11 @@ export default async function SurveyAdminDashboard() {
                       </td>
                       <td style={{ padding: '1rem 1.5rem', color: 'var(--text-secondary)' }}>
                         {new Date(resp.createdAt).toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata' })}
+                      </td>
+                      <td style={{ padding: '1rem 1.5rem' }}>
+                        <Link href={`/admin/dashboard/survey/${resp.id}`} className="btn btn-secondary" style={{ padding: '0.375rem 0.75rem', fontSize: '0.75rem' }}>
+                          Review
+                        </Link>
                       </td>
                     </tr>
                   )
