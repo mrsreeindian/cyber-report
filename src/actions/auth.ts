@@ -66,6 +66,5 @@ export async function loginAdmin(formData: FormData) {
     return { success: false, error: 'An internal error occurred' };
   }
 
-  // Redirect must be called outside try-catch
-  redirect('/admin/dashboard');
+  return { success: true };
 }

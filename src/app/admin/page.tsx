@@ -25,13 +25,15 @@ export default function AdminLogin() {
 
     try {
       const result = await loginAdmin(formData);
-      if (result && !result.success) {
-        setError(result.error || 'Login failed');
+      if (result && result.success) {
+        router.push('/admin/dashboard');
+      } else {
+        setError(result?.error || 'Login failed');
         setIsSubmitting(false);
       }
     } catch (err) {
-      // In Next.js, a successful redirect inside a server action throws an error that should not be caught locally.
-      // However, if we do catch it, we just ignore it as the redirect happens anyway.
+      console.error(err);
+      setError('An unexpected error occurred');
       setIsSubmitting(false);
     }
   };
