@@ -48,13 +48,13 @@ export default function SurveyCharts({ data }: { data: any[] }) {
           </h3>
           <div style={{ height: '300px' }}>
             <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
+              <PieChart margin={{ top: 20, right: 30, bottom: 20, left: 30 }}>
                 <Pie
                   data={q1ChartData}
                   cx="50%"
                   cy="50%"
                   innerRadius={60}
-                  outerRadius={100}
+                  outerRadius={80}
                   paddingAngle={5}
                   dataKey="value"
                   label={({ name, percent = 0 }) => `${name} ${(percent * 100).toFixed(0)}%`}
@@ -79,13 +79,13 @@ export default function SurveyCharts({ data }: { data: any[] }) {
           </h3>
           <div style={{ height: '300px' }}>
             <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
+              <PieChart margin={{ top: 20, right: 30, bottom: 20, left: 30 }}>
                 <Pie
                   data={q2ChartData}
                   cx="50%"
                   cy="50%"
                   innerRadius={0}
-                  outerRadius={100}
+                  outerRadius={80}
                   dataKey="value"
                   label={({ name, percent = 0 }) => `${name} ${(percent * 100).toFixed(0)}%`}
                 >

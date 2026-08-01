@@ -145,7 +145,7 @@ export default async function AdminDashboard({ searchParams }: { searchParams: P
                     </span>
                   </td>
                   <td style={{ padding: '1rem 1.5rem', color: 'var(--text-secondary)' }}>
-                    {new Date(report.createdAt).toLocaleDateString()}
+                    {new Date(report.createdAt).toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata' })}
                   </td>
                   <td style={{ padding: '1rem 1.5rem' }}>
                     <Link href={`/admin/dashboard/report/${report.id}`} className="btn btn-secondary" style={{ padding: '0.375rem 0.75rem', fontSize: '0.75rem' }}>

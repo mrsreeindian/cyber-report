@@ -54,7 +54,7 @@ export default async function ReportDetail({ params }: { params: Promise<{ id: s
             <Calendar size={16} /> Submitted On
           </h3>
           <p style={{ fontSize: '1.125rem', fontWeight: 500 }}>
-            {new Date(report.createdAt).toLocaleString()}
+            {new Date(report.createdAt).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}
           </p>
         </div>
       </div>

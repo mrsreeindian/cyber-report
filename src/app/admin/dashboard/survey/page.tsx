@@ -61,7 +61,7 @@ export default async function SurveyAdminDashboard() {
                         {answers?.q2 || '-'}
                       </td>
                       <td style={{ padding: '1rem 1.5rem', color: 'var(--text-secondary)' }}>
-                        {new Date(resp.createdAt).toLocaleDateString()}
+                        {new Date(resp.createdAt).toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata' })}
                       </td>
                     </tr>
                   )

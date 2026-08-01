@@ -44,7 +44,7 @@ export async function GET(request: Request) {
         escapeCsv(report.category),
         escapeCsv(report.platform),
         escapeCsv(report.status),
-        escapeCsv(new Date(report.createdAt).toLocaleString()),
+        escapeCsv(new Date(report.createdAt).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })),
         escapeCsv(decrypt(report.description)),
         escapeCsv(attachmentLinks)
       ].join(',');
