@@ -37,7 +37,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '3rem' }}>
           <a href="/" className="logo" style={{ marginBottom: 0, display: 'flex', flexDirection: 'column', gap: '0.8rem', alignItems: 'flex-start' }}>
             <Image src="/logo.png" alt="Behind The Smiles Logo" width={56} height={56} style={{ borderRadius: '12px', objectFit: 'contain' }} />
-            <span style={{ fontSize: '1.25rem', fontFamily: 'Playfair Display, serif' }}>Behind The Smiles</span>
+            <span style={{ fontSize: '1.25rem', fontFamily: "'Sekuya', 'Playfair Display', serif" }}>Behind The Smiles</span>
           </a>
           <button 
             className="sidebar-close-btn"
