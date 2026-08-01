@@ -22,7 +22,7 @@ export default function Home() {
           </div>
 
           <div className="delay-400 animate-fade-in" style={{ opacity: 0, marginTop: '4rem', display: 'flex', gap: '3rem', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'flex-start' }}>
-            <Link href="/report" className="btn btn-primary" style={{ padding: '1.25rem 3rem', fontSize: '1.1rem' }}>
+            <Link href="/report" className="btn btn-primary" style={{ padding: '0.875rem 2rem', fontSize: '1rem' }}>
               Submit Anonymous Report
             </Link>
             <div className="human-quote" style={{ margin: 0, fontSize: '2.5rem', transform: 'rotate(-4deg) translateY(-8px)', opacity: 0.8 }}>
