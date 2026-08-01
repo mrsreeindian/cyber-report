@@ -219,6 +219,7 @@ export default function SurveyPage() {
             return (
               <label 
                 key={option} 
+                onClick={() => handleOptionChange(option)}
                 style={{ 
                   display: 'flex', 
                   alignItems: 'center', 
