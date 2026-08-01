@@ -25,7 +25,7 @@ export default function Home() {
             <Link href="/report" className="btn btn-primary" style={{ padding: '0.6rem 1.5rem', fontSize: '0.9rem' }}>
               Submit Anonymous Report
             </Link>
-            <div className="human-quote" style={{ margin: 0, fontSize: '2.5rem', transform: 'rotate(-4deg) translateY(-8px)', opacity: 0.8 }}>
+            <div className="human-quote" style={{ margin: 0, fontSize: '1.5rem', transform: 'rotate(-4deg) translateY(-8px)', opacity: 0.8 }}>
               "We've got your back."
             </div>
           </div>
