@@ -45,6 +45,9 @@ export default async function AdminDashboard({ searchParams }: { searchParams: P
           <Link href="/admin/dashboard/survey" className="btn btn-primary" style={{ padding: '0.5rem 1rem', fontSize: '0.875rem' }}>
             Survey Analytics
           </Link>
+          <a href="/admin/dashboard/export-all" className="btn btn-primary" style={{ padding: '0.5rem 1rem', fontSize: '0.875rem', background: 'var(--success)' }}>
+            <Download size={16} /> Export Database
+          </a>
           <ClearDataButton />
           <Link href="/admin" className="btn btn-secondary" style={{ padding: '0.5rem 1rem', fontSize: '0.875rem' }}>
             <LogOut size={16} /> Logout
