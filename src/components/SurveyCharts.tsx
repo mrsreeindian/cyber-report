@@ -4,38 +4,22 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 
 const COLORS = ['#9b87f5', '#34d399', '#fbbf24', '#f87171', '#60a5fa', '#a78bfa'];
 
-export default function SurveyCharts({ data }: { data: any[] }) {
-  if (!data || data.length === 0) {
+interface ChartData {
+  name: string;
+  value: number;
+}
+
+interface SurveyChartsProps {
+  q1ChartData: ChartData[];
+  q2ChartData: ChartData[];
+  q5ChartData: ChartData[];
+  totalResponses: number;
+}
+
+export default function SurveyCharts({ q1ChartData, q2ChartData, q5ChartData, totalResponses }: SurveyChartsProps) {
+  if (totalResponses === 0) {
     return <div style={{ padding: '2rem', textAlign: 'center', color: 'var(--text-secondary)' }}>No survey data available yet.</div>;
   }
-
-  // Count responses for Question 1 (Familiarity)
-  const q1Counts = data.reduce((acc, curr) => {
-    const ans = curr.answers?.q1 || 'Unanswered';
-    acc[ans] = (acc[ans] || 0) + 1;
-    return acc;
-  }, {});
-  const q1ChartData = Object.entries(q1Counts).map(([name, value]) => ({ name, value }));
-
-  // Count responses for Question 2 (Experienced)
-  const q2Counts = data.reduce((acc, curr) => {
-    const ans = curr.answers?.q2 || 'Unanswered';
-    acc[ans] = (acc[ans] || 0) + 1;
-    return acc;
-  }, {});
-  const q2ChartData = Object.entries(q2Counts).map(([name, value]) => ({ name, value }));
-
-  // Count multiple choice (Q5 - What can be considered cyberbullying)
-  const q5Counts = data.reduce((acc, curr) => {
-    const ansArray = curr.answers?.q5 || [];
-    if (Array.isArray(ansArray)) {
-      ansArray.forEach(ans => {
-        acc[ans] = (acc[ans] || 0) + 1;
-      });
-    }
-    return acc;
-  }, {});
-  const q5ChartData = Object.entries(q5Counts).map(([name, value]) => ({ name, value })).sort((a: any, b: any) => b.value - a.value);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>

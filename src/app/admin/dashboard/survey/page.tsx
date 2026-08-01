@@ -10,6 +10,36 @@ export default async function SurveyAdminDashboard() {
     orderBy: { createdAt: 'desc' }
   });
 
+  // Aggregate data for Question 1 (Familiarity)
+  const q1Counts = responses.reduce((acc: any, curr) => {
+    const ans = (curr.answers as Record<string, any>)?.q1 || 'Unanswered';
+    acc[ans] = (acc[ans] || 0) + 1;
+    return acc;
+  }, {});
+  const q1ChartData = Object.entries(q1Counts).map(([name, value]) => ({ name: String(name), value: Number(value) }));
+
+  // Aggregate data for Question 2 (Experienced)
+  const q2Counts = responses.reduce((acc: any, curr) => {
+    const ans = (curr.answers as Record<string, any>)?.q2 || 'Unanswered';
+    acc[ans] = (acc[ans] || 0) + 1;
+    return acc;
+  }, {});
+  const q2ChartData = Object.entries(q2Counts).map(([name, value]) => ({ name: String(name), value: Number(value) }));
+
+  // Aggregate data for Question 5 (What can be considered cyberbullying)
+  const q5Counts = responses.reduce((acc: any, curr) => {
+    const ansArray = (curr.answers as Record<string, any>)?.q5 || [];
+    if (Array.isArray(ansArray)) {
+      ansArray.forEach(ans => {
+        acc[ans] = (acc[ans] || 0) + 1;
+      });
+    }
+    return acc;
+  }, {});
+  const q5ChartData = Object.entries(q5Counts)
+    .map(([name, value]) => ({ name: String(name), value: Number(value) }))
+    .sort((a, b) => b.value - a.value);
+
   return (
     <div className="animate-fade-in" style={{ width: '100%', maxWidth: '1200px', margin: '0 auto' }}>
       <div className="dashboard-header" style={{ marginBottom: '2rem' }}>
@@ -25,7 +55,12 @@ export default async function SurveyAdminDashboard() {
         </div>
       </div>
 
-      <SurveyCharts data={responses} />
+      <SurveyCharts 
+        q1ChartData={q1ChartData} 
+        q2ChartData={q2ChartData} 
+        q5ChartData={q5ChartData} 
+        totalResponses={responses.length} 
+      />
       
       <h2 style={{ fontSize: '1.25rem', fontWeight: 600, marginTop: '4rem', marginBottom: '1.5rem' }}>Recent Responses</h2>
       <div className="glass-panel" style={{ overflow: 'hidden' }}>
