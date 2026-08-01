@@ -35,8 +35,10 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
       
       <aside className={`sidebar ${isOpen ? 'open' : 'closed'}`}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '3rem' }}>
-          <a href="/" className="logo" style={{ marginBottom: 0, display: 'flex', flexDirection: 'column', gap: '0.5rem', alignItems: 'flex-start' }}>
-            <Image src="/logo.png" alt="Behind The Smiles Logo" width={64} height={64} style={{ borderRadius: '12px', objectFit: 'contain', filter: 'drop-shadow(0 15px 25px rgba(0, 0, 0, 0.3))' }} />
+          <a href="/" className="logo" style={{ marginBottom: 0, display: 'flex', flexDirection: 'column', gap: '0.8rem', alignItems: 'flex-start' }}>
+            <div style={{ borderRadius: '16px', padding: '4px', background: 'var(--surface)', boxShadow: '0 12px 30px rgba(91, 140, 112, 0.3), 0 4px 10px rgba(0,0,0,0.5)', border: '1px solid var(--glass-border)' }}>
+              <Image src="/logo.png" alt="Behind The Smiles Logo" width={56} height={56} style={{ borderRadius: '12px', objectFit: 'contain' }} />
+            </div>
             <span style={{ fontSize: '1.25rem', fontFamily: 'Playfair Display, serif' }}>Behind The Smiles</span>
           </a>
           <button 
