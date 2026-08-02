@@ -118,3 +118,51 @@ export async function setupAdminAccount(formData: FormData) {
     return { success: false, error: 'An error occurred during setup' };
   }
 }
+
+export async function registerAdminAccount(formData: FormData) {
+  const cookieStore = await cookies();
+  const sessionId = cookieStore.get('admin_session')?.value;
+  if (!sessionId) {
+    return { success: false, error: 'Unauthorized' };
+  }
+
+  const currentAdmin = await prisma.admin.findUnique({ where: { id: sessionId } });
+  if (!currentAdmin) return { success: false, error: 'Unauthorized' };
+
+  const username = formData.get('username') as string;
+  const password = formData.get('password') as string;
+
+  if (!username || !password || username.length < 3 || password.length < 8) {
+    return { success: false, error: 'Invalid username or password (password must be at least 8 chars)' };
+  }
+
+  const existingAdmin = await prisma.admin.findUnique({ where: { username } });
+  if (existingAdmin) {
+    return { success: false, error: 'Username already taken' };
+  }
+
+  try {
+    const mfaSecret = generateSecret();
+    const hashedPassword = await argon2.hash(password);
+
+    await prisma.admin.create({
+      data: {
+        username,
+        passwordHash: hashedPassword,
+        mfaSecret,
+        role: 'admin'
+      }
+    });
+
+    const otpauthUrl = generateURI({
+      issuer: 'Behind The Smiles (Admin)',
+      label: username,
+      secret: mfaSecret
+    });
+    
+    return { success: true, otpauthUrl };
+  } catch (error) {
+    console.error('Register error:', error);
+    return { success: false, error: 'An error occurred during registration' };
+  }
+}
