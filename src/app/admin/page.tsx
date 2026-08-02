@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ShieldCheck, LockKeyhole, Eye, EyeOff } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
@@ -9,10 +9,21 @@ import { loginAdmin } from '@/actions/auth';
 export default function AdminLogin() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [totpCode, setTotpCode] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
   const router = useRouter();
+
+  useEffect(() => {
+    import('@/actions/auth').then(({ checkAdminExists }) => {
+      checkAdminExists().then(exists => {
+        if (!exists) {
+          router.push('/admin/setup');
+        }
+      });
+    });
+  }, [router]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,6 +33,9 @@ export default function AdminLogin() {
     const formData = new FormData();
     formData.append('username', username);
     formData.append('password', password);
+    if (totpCode) {
+      formData.append('totpCode', totpCode);
+    }
 
     try {
       const result = await loginAdmin(formData);
@@ -106,6 +120,21 @@ export default function AdminLogin() {
               {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
             </button>
           </div>
+        </div>
+
+        <div className="form-group" style={{ marginTop: '1rem' }}>
+          <label className="form-label">2FA Code (If enabled)</label>
+          <input 
+            type="text" 
+            className="form-input" 
+            name="totpCode"
+            value={totpCode}
+            onChange={(e) => setTotpCode(e.target.value)}
+            placeholder="000000"
+            pattern="[0-9]{6}"
+            maxLength={6}
+            autoComplete="one-time-code"
+          />
         </div>
 
         <div style={{ marginTop: '0.5rem', marginBottom: '1rem' }}></div>

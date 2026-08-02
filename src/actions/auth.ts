@@ -22,19 +22,7 @@ export async function loginAdmin(formData: FormData) {
       where: { username }
     });
 
-    if (!admin && username === 'sugham') {
-      const hashedPassword = await argon2.hash('ammafans2026');
-      admin = await prisma.admin.create({
-        data: {
-          username: 'sugham',
-          passwordHash: hashedPassword,
-          role: 'superadmin',
-        }
-      });
-    }
-
     if (!admin) {
-      // Return generic error to prevent username enumeration
       return { success: false, error: 'Invalid username or password' };
     }
 
@@ -42,6 +30,24 @@ export async function loginAdmin(formData: FormData) {
 
     if (!isValid) {
       return { success: false, error: 'Invalid username or password' };
+    }
+
+    // Verify 2FA code if MFA is enabled
+    if (admin.mfaSecret) {
+      const totpCode = formData.get('totpCode');
+      if (!totpCode || typeof totpCode !== 'string') {
+        return { success: false, error: '2FA code required' };
+      }
+      
+      const otplib = await import('otplib');
+      const isMfaValid = otplib.authenticator.verify({
+        token: totpCode.trim(),
+        secret: admin.mfaSecret
+      });
+      
+      if (!isMfaValid) {
+        return { success: false, error: 'Invalid 2FA code' };
+      }
     }
 
     // Set secure HTTP-only cookie
@@ -67,4 +73,44 @@ export async function loginAdmin(formData: FormData) {
   }
 
   return { success: true };
+}
+
+export async function checkAdminExists() {
+  const count = await prisma.admin.count();
+  return count > 0;
+}
+
+export async function setupAdminAccount(formData: FormData) {
+  const count = await prisma.admin.count();
+  if (count > 0) {
+    return { success: false, error: 'An admin account already exists. Setup is locked.' };
+  }
+
+  const username = formData.get('username') as string;
+  const password = formData.get('password') as string;
+
+  if (!username || !password || username.length < 3 || password.length < 8) {
+    return { success: false, error: 'Invalid username or password (password must be at least 8 chars)' };
+  }
+
+  try {
+    const otplib = await import('otplib');
+    const mfaSecret = otplib.authenticator.generateSecret();
+    const hashedPassword = await argon2.hash(password);
+
+    await prisma.admin.create({
+      data: {
+        username,
+        passwordHash: hashedPassword,
+        mfaSecret,
+        role: 'superadmin'
+      }
+    });
+
+    const otpauthUrl = otplib.authenticator.keyuri(username, 'Behind The Smiles (Admin)', mfaSecret);
+    return { success: true, otpauthUrl };
+  } catch (error) {
+    console.error('Setup error:', error);
+    return { success: false, error: 'An error occurred during setup' };
+  }
 }
