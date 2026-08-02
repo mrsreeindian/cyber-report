@@ -22,9 +22,14 @@ export default function Home() {
           </div>
 
           <div className="delay-400 animate-fade-in" style={{ opacity: 0, marginTop: '4rem', display: 'flex', gap: '3rem', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'flex-start' }}>
-            <Link href="/report" className="btn btn-primary" style={{ padding: '0.6rem 1.5rem', fontSize: '0.9rem' }}>
-              Submit Anonymous Report
-            </Link>
+            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+              <Link href="/report" className="btn btn-primary" style={{ padding: '0.6rem 1.5rem', fontSize: '0.9rem' }}>
+                Submit Anonymous Report
+              </Link>
+              <Link href="/survey" className="btn btn-secondary" style={{ padding: '0.6rem 1.5rem', fontSize: '0.9rem' }}>
+                Take a Survey
+              </Link>
+            </div>
             <div className="human-quote" style={{ margin: 0, fontSize: '1.15rem', transform: 'rotate(-4deg) translateY(-8px)', opacity: 0.8 }}>
               "We've got your back."
             </div>
