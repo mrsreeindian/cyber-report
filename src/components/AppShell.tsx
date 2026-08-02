@@ -1,12 +1,15 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { HeartHandshake, Menu, X } from "lucide-react";
+import { HeartHandshake, Menu, X, LogOut, Shield } from "lucide-react";
+import { usePathname } from 'next/navigation';
 import Image from "next/image";
 import ThemeToggle from "@/components/ThemeToggle";
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
+  const isAdmin = pathname.startsWith('/admin/dashboard');
 
   // Open sidebar on desktop by default, keep closed on mobile
   useEffect(() => {
@@ -58,7 +61,22 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
           <a href="/survey" className="sidebar-link">
             <span style={{ fontSize: '1.05rem' }}>Take Survey</span>
           </a>
-          {/* Admin link hidden per user request */}
+          {isAdmin && (
+            <>
+              <div style={{ height: '1px', background: 'var(--border)', margin: '1rem 0', opacity: 0.2 }} />
+              <div style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-secondary)', marginBottom: '0.5rem', paddingLeft: '1rem' }}>
+                Admin Controls
+              </div>
+              <a href="/admin/dashboard" className="sidebar-link">
+                <Shield size={18} />
+                <span style={{ fontSize: '1.05rem' }}>Dashboard</span>
+              </a>
+              <a href="/admin" className="sidebar-link" style={{ color: 'var(--danger)' }}>
+                <LogOut size={18} />
+                <span style={{ fontSize: '1.05rem' }}>Logout</span>
+              </a>
+            </>
+          )}
         </nav>
         
         <div className="sidebar-footer">

@@ -35,12 +35,14 @@ export default async function AdminDashboard({ searchParams }: { searchParams: P
 
   return (
     <div className="animate-fade-in" style={{ width: '100%', maxWidth: '1200px', margin: '0 auto' }}>
-      <div className="dashboard-header">
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '1.5rem' }}>
         <div>
           <h1 style={{ fontSize: '2rem', fontWeight: 700 }}>Dashboard</h1>
           <p style={{ color: 'var(--text-secondary)' }}>Welcome back, admin.</p>
         </div>
-        
+      </div>
+
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
         <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
           <Link href="/admin/dashboard/survey" className="btn btn-primary" style={{ padding: '0.5rem 1rem', fontSize: '0.875rem' }}>
             Survey Analytics
@@ -48,13 +50,13 @@ export default async function AdminDashboard({ searchParams }: { searchParams: P
           <Link href="/admin/dashboard/register" className="btn btn-primary" style={{ padding: '0.5rem 1rem', fontSize: '0.875rem' }}>
             <UserPlus size={16} /> Add Admin
           </Link>
+        </div>
+        
+        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
           <a href="/admin/dashboard/export-all" className="btn btn-primary" style={{ padding: '0.5rem 1rem', fontSize: '0.875rem', background: 'var(--success)' }}>
             <Download size={16} /> Export Database
           </a>
           <ClearDataButton />
-          <Link href="/admin" className="btn btn-secondary" style={{ padding: '0.5rem 1rem', fontSize: '0.875rem' }}>
-            <LogOut size={16} /> Logout
-          </Link>
         </div>
       </div>
 
