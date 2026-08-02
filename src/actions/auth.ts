@@ -4,6 +4,7 @@ import { prisma } from '@/lib/prisma';
 import * as argon2 from 'argon2';
 import { cookies, headers } from 'next/headers';
 import { redirect } from 'next/navigation';
+import { authenticator } from 'otplib';
 
 export async function loginAdmin(formData: FormData) {
   const username = formData.get('username');
@@ -39,8 +40,7 @@ export async function loginAdmin(formData: FormData) {
         return { success: false, error: '2FA code required' };
       }
       
-      const otplib = await import('otplib');
-      const isMfaValid = otplib.authenticator.verify({
+      const isMfaValid = authenticator.verify({
         token: totpCode.trim(),
         secret: admin.mfaSecret
       });
@@ -94,8 +94,7 @@ export async function setupAdminAccount(formData: FormData) {
   }
 
   try {
-    const otplib = await import('otplib');
-    const mfaSecret = otplib.authenticator.generateSecret();
+    const mfaSecret = authenticator.generateSecret();
     const hashedPassword = await argon2.hash(password);
 
     await prisma.admin.create({
@@ -107,7 +106,7 @@ export async function setupAdminAccount(formData: FormData) {
       }
     });
 
-    const otpauthUrl = otplib.authenticator.keyuri(username, 'Behind The Smiles (Admin)', mfaSecret);
+    const otpauthUrl = authenticator.keyuri(username, 'Behind The Smiles (Admin)', mfaSecret);
     return { success: true, otpauthUrl };
   } catch (error) {
     console.error('Setup error:', error);
