@@ -3,7 +3,7 @@ import './globals.css';
 import AppShell from '@/components/AppShell';
 
 export const metadata: Metadata = {
-  title: 'Behind The Smiles',
+  title: 'Behind The Smile',
   description: 'An anonymous and secure platform for reporting incidents.',
 };
 

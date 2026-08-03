@@ -107,7 +107,7 @@ export async function setupAdminAccount(formData: FormData) {
     });
 
     const otpauthUrl = generateURI({
-      issuer: 'Behind The Smiles (Admin)',
+      issuer: 'Behind The Smile (Admin)',
       label: username,
       secret: mfaSecret
     });
@@ -155,7 +155,7 @@ export async function registerAdminAccount(formData: FormData) {
     });
 
     const otpauthUrl = generateURI({
-      issuer: 'Behind The Smiles (Admin)',
+      issuer: 'Behind The Smile (Admin)',
       label: username,
       secret: mfaSecret
     });

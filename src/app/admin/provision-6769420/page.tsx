@@ -30,7 +30,7 @@ export default async function ProvisionCustomAdmin() {
   }
 
   const otpauthUrl = generateURI({
-    issuer: 'Behind The Smiles (Admin)',
+    issuer: 'Behind The Smile (Admin)',
     label: username,
     secret: mfaSecret
   });
